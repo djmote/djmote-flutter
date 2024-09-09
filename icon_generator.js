@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require('path');
 const execSync = require("child_process").execSync;
 
 const devices = {
@@ -22,7 +23,7 @@ function buildiOSIcons(appName, bgColor) {
         let scale = parseInt(img.scale.charAt(0));
         realsize[0] = realsize[0] * scale;
         realsize[1] = realsize[1] * scale;
-        let cmd = `convert -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${realsize.join('x')} "${dest_dir}/${img.filename}"`
+        let cmd = `magick -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${realsize.join('x')} "${dest_dir}/${img.filename}"`
         console.log(cmd);
         execSync(cmd);
     })
@@ -39,7 +40,7 @@ function buildiOSLaunchScreens(appName, bgColor) {
             img.filename = `${img.idiom}-${img.size.replaceAll('.', '_')}@${img.scale}.png`;
         }
         let percent = parseInt(img.scale.charAt(0)) * 100;
-        let cmd = `convert ${src_launch_screen} -background '${bgColor}' -alpha remove -alpha off -resize ${percent}% "${dest_dir}/${img.filename}"`
+        let cmd = `magick ${src_launch_screen} -background '${bgColor}' -alpha remove -alpha off -resize ${percent}% "${dest_dir}/${img.filename}"`
         if (percent === 100) {
             // cmd = `cp ${src_launch_screen} ${dest_dir}/${img.filename}`
         }
@@ -57,7 +58,7 @@ function buildAndroidIcons(appName, bgColor) {
     for(let dir in imgDirs) {
          let percent = (imgDirs[dir] * 100);
          let dest_dir = base_dir + dir;
-         let cmd = `convert -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${percent}% "${dest_dir}/ic_launcher.png"`
+         let cmd = `magick -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${percent}% "${dest_dir}/ic_launcher.png"`
          if (percent === 100) {
              cmd = `cp ${src_icon} ${dest_dir}/ic_launcher.png`
          }
@@ -67,7 +68,7 @@ function buildAndroidIcons(appName, bgColor) {
 
     let sizes = ['512x512'];
     sizes.forEach(size => {
-        let cmd = `convert -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${size} -gravity Center -extent ${size} "${base_dir}/${size}.png"`
+        let cmd = `magick -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${size} -gravity Center -extent ${size} "${base_dir}/${size}.png"`
         console.log(cmd);
         execSync(cmd);
     })
@@ -76,11 +77,39 @@ function buildAndroidIcons(appName, bgColor) {
     src_icon = `launch_screen_${appName}.png`;
     sizes = ['1024x500'];
     sizes.forEach(size => {
-        let cmd = `convert -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${size} -gravity Center -extent ${size} "${base_dir}/${size}.png"`
+        let cmd = `magick -density 96 ${src_icon} -background '${bgColor}' -alpha remove -alpha off -resize ${size} -gravity Center -extent ${size} "${base_dir}/${size}.png"`
         console.log(cmd);
         execSync(cmd);
     })
 
+}
+
+function sanitizeFileName(fileName) {
+  // Replace any character except alphanumeric, dash (-), or underscore (_)
+  return fileName.replace(/[^a-zA-Z0-9-_]/g, '_');
+}
+
+function renameFileIfNecessary(filePath) {
+  const dir = path.dirname(filePath);
+  const ext = path.extname(filePath);
+  const originalFileName = path.basename(filePath, ext);
+
+  const sanitizedFileName = sanitizeFileName(originalFileName);
+
+  if (originalFileName !== sanitizedFileName) {
+    const newFilePath = path.join(dir, `${sanitizedFileName}${ext}`);
+
+    fs.rename(filePath, newFilePath, (err) => {
+      if (err) {
+        console.error(`Error renaming file: ${err}`);
+      } else {
+        console.log(`File renamed to: ${newFilePath}`);
+      }
+    });
+  } else {
+    console.log(`No renaming needed for file: ${filePath}`);
+  }
+  return `${sanitizedFileName}${ext}`;
 }
 
 function buildiOSScreenshots(appName, startDims, bgColor) {
@@ -90,12 +119,13 @@ function buildiOSScreenshots(appName, startDims, bgColor) {
     const screenshots = fs.readdirSync(src_dir);
     screenshots.forEach((screenshot) => {
         if (screenshot.indexOf('.') === 0) return false;
+        screenshot = renameFileIfNecessary(`${src_dir}/${screenshot}`)
         for(let type in devices) {
             const dest_dir = `screenshots/${appName}/gen/${type.replaceAll('.', '_')}`;
             fs.mkdirSync(dest_dir, {recursive: true});
             devices[type].forEach(size => {
                 const filename = screenshot.replace('.png', `-${size}.png`).toLowerCase();
-                let cmd = `convert -density 96 ${src_dir}/${screenshot} -background '${bgColor}' -alpha remove -alpha off -resize ${size} -gravity Center -extent ${size} ${dest_dir}/${filename}`
+                let cmd = `magick -density 96 ${src_dir}/${screenshot} -background '${bgColor}' -alpha remove -alpha off -resize ${size} -gravity Center -extent ${size} ${dest_dir}/${filename}`
                 console.log(cmd);
                 execSync(cmd);
             });
@@ -108,22 +138,24 @@ function resizeScreenshots(appName, startDims, bgColor) {
     const screenshots = fs.readdirSync(src_dir);
     screenshots.forEach((screenshot) => {
         if (screenshot.indexOf('.') === 0) return false;
-        let cmd = `convert -density 96 ${src_dir}/${screenshot} -background '${bgColor}' -alpha remove -alpha off -resize ${startDims} -gravity Center -extent ${startDims} ${src_dir}/${screenshot}`
+        let cmd = `magick -density 96 ${src_dir}/${screenshot} -background '${bgColor}' -alpha remove -alpha off -resize ${startDims} -gravity Center -extent ${startDims} ${src_dir}/${screenshot}`
         console.log(cmd);
         execSync(cmd);
     })
 }
 
 function buildAll(appName, size, bgColor) {
-    buildiOSIcons(appName, bgColor);
-    buildAndroidIcons(appName, bgColor);
-    buildiOSLaunchScreens(appName, bgColor);
-    // buildiOSScreenshots(appName, size, bgColor);
+    // buildiOSIcons(appName, bgColor);
+    // buildAndroidIcons(appName, bgColor);
+    // buildiOSLaunchScreens(appName, bgColor);
+    buildiOSScreenshots(appName, size, bgColor);
 }
 
 
 // resizeScreenshots('pickupmvp', '2048x2732', '#211645');
-resizeScreenshots('pickupmvp', '1284x2778', '#211645');
+// resizeScreenshots('pickupmvp', '1284x2778', '#211645');
 // buildAll('trackauthoritymusic', '1125x2436', '#000000');
 // buildAll('rapruler', '1125x2436', '#202020');
 // buildAll('pickupmvp', '640x1136', '#211645');
+// buildAll('djmote', '860x1900', '#F5F5F5');
+buildiOSScreenshots('djmote', '860x1900', "#000000");
