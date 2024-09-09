@@ -7,9 +7,11 @@
 # Build to Debug
 - simply replace the contents of `.env` with the .env.[brand] you want to build
 - then `flutter run` or `flutter run --release`
+- ex. `flutter run --device-id R5CX70LQ6YY`
 
 # Build to Release
 - `flutter build appbundle --flavor djmote`
+- `flutter build appbundle --flavor djmote --device-id R5CX70LQ6YY`
 
 ## Launching Options
 - [x] Load startup Url embedded from .env when built  
