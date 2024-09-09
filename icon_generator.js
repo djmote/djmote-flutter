@@ -145,10 +145,10 @@ function resizeScreenshots(appName, startDims, bgColor) {
 }
 
 function buildAll(appName, size, bgColor) {
-    // buildiOSIcons(appName, bgColor);
-    // buildAndroidIcons(appName, bgColor);
-    // buildiOSLaunchScreens(appName, bgColor);
-    buildiOSScreenshots(appName, size, bgColor);
+    buildiOSIcons(appName, bgColor);
+    buildAndroidIcons(appName, bgColor);
+    buildiOSLaunchScreens(appName, bgColor);
+    // buildiOSScreenshots(appName, size, bgColor);
 }
 
 
@@ -157,5 +157,5 @@ function buildAll(appName, size, bgColor) {
 // buildAll('trackauthoritymusic', '1125x2436', '#000000');
 // buildAll('rapruler', '1125x2436', '#202020');
 // buildAll('pickupmvp', '640x1136', '#211645');
-// buildAll('djmote', '860x1900', '#F5F5F5');
+buildAll('djmote', '860x1900', '#000000');
 buildiOSScreenshots('djmote', '860x1900', "#000000");
