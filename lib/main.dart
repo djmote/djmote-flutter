@@ -37,6 +37,7 @@ void main() async {
   await FlutterConfig.loadEnvVariables();
   const String flavor = String.fromEnvironment('FLAVOR');
   developer.log('running flavor: $flavor');
+
   Env env = fromFlavorToEnv(flavor);
 
   await Firebase.initializeApp(

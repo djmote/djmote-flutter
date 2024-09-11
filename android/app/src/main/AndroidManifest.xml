@@ -29,32 +29,12 @@
 
 <!--            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />-->
 
-<!--            <intent-filter android:autoVerify="true">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-
-<!--                &lt;!&ndash; If a user clicks on a shared link that uses the "http" scheme, your-->
-<!--         app should be able to delegate that traffic to "https". &ndash;&gt;-->
-<!--                <data android:scheme="http" />-->
-<!--                <data android:scheme="https" />-->
-<!--                <data android:host="@string/client_host" />-->
-
-<!--            </intent-filter>-->
-<!--            <intent-filter android:autoVerify="true">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-<!--                &lt;!&ndash; Accepts URIs that begin with "example://gizmos” &ndash;&gt;-->
-<!--                <data android:scheme="app" />-->
-<!--                <data android:host="@string/APP_ID" />-->
-<!--            </intent-filter>-->
             <!-- App Link sample -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="www.example.com" android:pathPrefix="/foo" />
+                <data android:scheme="https" android:host="@string/client_host"/>
             </intent-filter>
 
             <!-- Deep Link sample -->
@@ -64,7 +44,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Add optional android:host to distinguish your app
                       from others in case of conflicting scheme name -->
-                <data android:scheme="sample" android:host="open.my.app" />
+                <data android:scheme="app" android:host="@string/APP_ID" />
                 <!-- <data android:scheme="sample" /> -->
             </intent-filter>
         </activity>

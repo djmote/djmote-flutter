@@ -14,13 +14,14 @@ class UrlService {
   late String port;
 
   init() {
-    // myHost = FlutterConfig.get('CLIENT_HOST');
-    myHost = 'djmote.com';
+
+    // myHost = FlutterConfig.get('CLIENT_HOST'); <- this should be stored in the Config
     // if (kDebugMode) {
     //   port = env.port();
     //   myHost = '192.168.0.19:$port';
     // }
-    appID = FlutterConfig.get("APP_ID");
+    myHost = 'djmote.com';
+    appID = FlutterConfig.get("APP_ID"); // <- this should be stored in the Config
     initUrl = 'https://$myHost';
     initUrl = UrlUtils.buildInitUrl(initUrl);
     developer.log('loading startup url: $initUrl');

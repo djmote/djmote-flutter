@@ -13,7 +13,8 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		A38EFB8BE20D142FCAD1ED0C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED06DEE237B98D3547D92BD /* Pods_Runner.framework */; };
+		F1B44BDEAB5E014815110AF9 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B057064BA2F243F11E54294 /* Pods_Runner.framework */; };
+		FA848B4A2C92260900FF2E1C /* config in Resources */ = {isa = PBXBuildFile; fileRef = FA848B492C92260900FF2E1C /* config */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,8 +31,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		005BB59FE845D3875DF82B30 /* Pods-Runner.debug-rapruler.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-rapruler.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-rapruler.xcconfig"; sourceTree = "<group>"; };
-		0808C6DC0878D9FC6AD257A8 /* Pods-Runner.profile-djmote.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-djmote.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-djmote.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		2389E5A729F2EBF800C3AA72 /* RunnerProfile-rapruler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerProfile-rapruler.entitlements"; sourceTree = "<group>"; };
@@ -41,22 +40,27 @@
 		2389E5BD29F2F20500C3AA72 /* RunnerDebug-rapruler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerDebug-rapruler.entitlements"; sourceTree = "<group>"; };
 		2389E5C129F2F25700C3AA72 /* RunnerRelease-rapruler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerRelease-rapruler.entitlements"; sourceTree = "<group>"; };
 		2389E5C229F2F3E500C3AA72 /* RunnerDebug-pickupmvp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerDebug-pickupmvp.entitlements"; sourceTree = "<group>"; };
-		279D91992084A9DC13FE0579 /* Pods-Runner.profile-rapruler.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-rapruler.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-rapruler.xcconfig"; sourceTree = "<group>"; };
-		2C1D333E8769959252287F80 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
-		2DC75288DD858C85F968F954 /* Pods-Runner.profile-pickupmvp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-pickupmvp.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-pickupmvp.xcconfig"; sourceTree = "<group>"; };
+		26071A0FEFD1AE9FF14131EC /* Pods-Runner.debug-djmote.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-djmote.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-djmote.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
-		3C9B7394AADA9E97CF74C707 /* Pods-Runner.release-rapruler.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-rapruler.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-rapruler.xcconfig"; sourceTree = "<group>"; };
+		42DA2809DC016589A667AE92 /* Pods-Runner.profile-pickupmvp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-pickupmvp.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-pickupmvp.xcconfig"; sourceTree = "<group>"; };
+		5EFDE623224587EC747F4B12 /* Pods-Runner.debug-rapruler.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-rapruler.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-rapruler.xcconfig"; sourceTree = "<group>"; };
 		5F29D84D29F5D83A00BDA2A8 /* RunnerDebug-trackauthoritymusic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerDebug-trackauthoritymusic.entitlements"; sourceTree = "<group>"; };
 		5F29D84E29F5D87200BDA2A8 /* RunnerRelease-trackauthoritymusic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerRelease-trackauthoritymusic.entitlements"; sourceTree = "<group>"; };
 		5F29D84F29F5D8A100BDA2A8 /* RunnerProfile-trackauthoritymusic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerProfile-trackauthoritymusic.entitlements"; sourceTree = "<group>"; };
 		5F68FCB12C8C610B00F4331B /* RunnerDebug-djmote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerDebug-djmote.entitlements"; sourceTree = "<group>"; };
 		5F68FCB22C8C612100F4331B /* RunnerRelease-djmote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerRelease-djmote.entitlements"; sourceTree = "<group>"; };
 		5F68FCB32C8C613000F4331B /* RunnerProfile-djmote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerProfile-djmote.entitlements"; sourceTree = "<group>"; };
-		6D5F9D108C8BB96CF22738E4 /* Pods-Runner.release-trackauthoritymusic.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-trackauthoritymusic.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-trackauthoritymusic.xcconfig"; sourceTree = "<group>"; };
+		62AD4FEB3F72C19D8E0755C3 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		6C94D9093054CD71A0637811 /* Pods-Runner.profile-rapruler.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-rapruler.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-rapruler.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		76652FC91240251599D09BB0 /* Pods-Runner.debug-pickupmvp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-pickupmvp.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-pickupmvp.xcconfig"; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
-		893641D18C7FCB0CC1F6D41C /* Pods-Runner.debug-pickupmvp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-pickupmvp.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-pickupmvp.xcconfig"; sourceTree = "<group>"; };
+		7B057064BA2F243F11E54294 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80E2858E7725538AAC3FACE1 /* Pods-Runner.release-djmote.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-djmote.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-djmote.xcconfig"; sourceTree = "<group>"; };
+		83E32236B0997EA58625E18E /* Pods-Runner.profile-djmote.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-djmote.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-djmote.xcconfig"; sourceTree = "<group>"; };
+		8BEC00B9915439566968259E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		95B34EBBECE2CCA8C43E0AED /* Pods-Runner.release-pickupmvp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-pickupmvp.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-pickupmvp.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,17 +68,12 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A04BAB45F63971096860E855 /* Pods-Runner.profile-trackauthoritymusic.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-trackauthoritymusic.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-trackauthoritymusic.xcconfig"; sourceTree = "<group>"; };
-		A6FC663BF2065B4C5D3ECD11 /* Pods-Runner.profile-tam.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-tam.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-tam.xcconfig"; sourceTree = "<group>"; };
-		AED06DEE237B98D3547D92BD /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B533A2DF4AF167C5A386DDEF /* Pods-Runner.release-djmote.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-djmote.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-djmote.xcconfig"; sourceTree = "<group>"; };
-		C508E07E4B192A004B55AC2B /* Pods-Runner.release-tam.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-tam.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-tam.xcconfig"; sourceTree = "<group>"; };
-		C5A69EC57A5D393BA0213CA9 /* Pods-Runner.debug-tam.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-tam.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-tam.xcconfig"; sourceTree = "<group>"; };
-		DAD4CBE8DB4E069D477D57E4 /* Pods-Runner.debug-trackauthoritymusic.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-trackauthoritymusic.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-trackauthoritymusic.xcconfig"; sourceTree = "<group>"; };
-		DD304D92A955B504F23B5D2D /* Pods-Runner.debug-djmote.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-djmote.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-djmote.xcconfig"; sourceTree = "<group>"; };
-		EB88B1A95B14F0D236A21A07 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
-		FA1E89176413570D322EF3CE /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
-		FD37BEAA2661B0ED21FB3AB6 /* Pods-Runner.release-pickupmvp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-pickupmvp.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-pickupmvp.xcconfig"; sourceTree = "<group>"; };
+		A8A1934E4A6CF82E47307821 /* Pods-Runner.release-trackauthoritymusic.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-trackauthoritymusic.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-trackauthoritymusic.xcconfig"; sourceTree = "<group>"; };
+		B894893C6A05DD1A084B3515 /* Pods-Runner.release-rapruler.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-rapruler.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-rapruler.xcconfig"; sourceTree = "<group>"; };
+		BF74C5A98FEAA39AA2D8DAD7 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		D1CBEF826E542F1122FC1C0C /* Pods-Runner.debug-trackauthoritymusic.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-trackauthoritymusic.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-trackauthoritymusic.xcconfig"; sourceTree = "<group>"; };
+		DB624D3D6EFF94EE8B1C3CB6 /* Pods-Runner.profile-trackauthoritymusic.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-trackauthoritymusic.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-trackauthoritymusic.xcconfig"; sourceTree = "<group>"; };
+		FA848B492C92260900FF2E1C /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; path = config; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,17 +81,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A38EFB8BE20D142FCAD1ED0C /* Pods_Runner.framework in Frameworks */,
+				F1B44BDEAB5E014815110AF9 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		74B52B08D25E45FB1F554189 /* Frameworks */ = {
+		919FB40A69CAB762B667BEAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AED06DEE237B98D3547D92BD /* Pods_Runner.framework */,
+				7B057064BA2F243F11E54294 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -111,11 +110,12 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				FA848B492C92260900FF2E1C /* config */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				AADC43E098E745865908E099 /* Pods */,
-				74B52B08D25E45FB1F554189 /* Frameworks */,
+				919FB40A69CAB762B667BEAF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -158,24 +158,21 @@
 		AADC43E098E745865908E099 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2C1D333E8769959252287F80 /* Pods-Runner.debug.xcconfig */,
-				EB88B1A95B14F0D236A21A07 /* Pods-Runner.release.xcconfig */,
-				FA1E89176413570D322EF3CE /* Pods-Runner.profile.xcconfig */,
-				005BB59FE845D3875DF82B30 /* Pods-Runner.debug-rapruler.xcconfig */,
-				3C9B7394AADA9E97CF74C707 /* Pods-Runner.release-rapruler.xcconfig */,
-				279D91992084A9DC13FE0579 /* Pods-Runner.profile-rapruler.xcconfig */,
-				893641D18C7FCB0CC1F6D41C /* Pods-Runner.debug-pickupmvp.xcconfig */,
-				C5A69EC57A5D393BA0213CA9 /* Pods-Runner.debug-tam.xcconfig */,
-				FD37BEAA2661B0ED21FB3AB6 /* Pods-Runner.release-pickupmvp.xcconfig */,
-				C508E07E4B192A004B55AC2B /* Pods-Runner.release-tam.xcconfig */,
-				2DC75288DD858C85F968F954 /* Pods-Runner.profile-pickupmvp.xcconfig */,
-				A6FC663BF2065B4C5D3ECD11 /* Pods-Runner.profile-tam.xcconfig */,
-				DAD4CBE8DB4E069D477D57E4 /* Pods-Runner.debug-trackauthoritymusic.xcconfig */,
-				6D5F9D108C8BB96CF22738E4 /* Pods-Runner.release-trackauthoritymusic.xcconfig */,
-				A04BAB45F63971096860E855 /* Pods-Runner.profile-trackauthoritymusic.xcconfig */,
-				DD304D92A955B504F23B5D2D /* Pods-Runner.debug-djmote.xcconfig */,
-				B533A2DF4AF167C5A386DDEF /* Pods-Runner.release-djmote.xcconfig */,
-				0808C6DC0878D9FC6AD257A8 /* Pods-Runner.profile-djmote.xcconfig */,
+				62AD4FEB3F72C19D8E0755C3 /* Pods-Runner.debug.xcconfig */,
+				76652FC91240251599D09BB0 /* Pods-Runner.debug-pickupmvp.xcconfig */,
+				26071A0FEFD1AE9FF14131EC /* Pods-Runner.debug-djmote.xcconfig */,
+				D1CBEF826E542F1122FC1C0C /* Pods-Runner.debug-trackauthoritymusic.xcconfig */,
+				5EFDE623224587EC747F4B12 /* Pods-Runner.debug-rapruler.xcconfig */,
+				8BEC00B9915439566968259E /* Pods-Runner.release.xcconfig */,
+				95B34EBBECE2CCA8C43E0AED /* Pods-Runner.release-pickupmvp.xcconfig */,
+				80E2858E7725538AAC3FACE1 /* Pods-Runner.release-djmote.xcconfig */,
+				A8A1934E4A6CF82E47307821 /* Pods-Runner.release-trackauthoritymusic.xcconfig */,
+				B894893C6A05DD1A084B3515 /* Pods-Runner.release-rapruler.xcconfig */,
+				BF74C5A98FEAA39AA2D8DAD7 /* Pods-Runner.profile.xcconfig */,
+				42DA2809DC016589A667AE92 /* Pods-Runner.profile-pickupmvp.xcconfig */,
+				83E32236B0997EA58625E18E /* Pods-Runner.profile-djmote.xcconfig */,
+				DB624D3D6EFF94EE8B1C3CB6 /* Pods-Runner.profile-trackauthoritymusic.xcconfig */,
+				6C94D9093054CD71A0637811 /* Pods-Runner.profile-rapruler.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -187,15 +184,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
-				9C1D2DCC13F00FDB5E25E3CB /* [CP] Check Pods Manifest.lock */,
-				23A4352629F4E1980076DB1A /* Setup Firebase Environment GoogleService-Info.plist */,
-				9740EEB61CF901F6004384FC /* Run Script */,
+				23DA3656CB00053CFED28972 /* [CP] Check Pods Manifest.lock */,
+				9740EEB61CF901F6004384FC /* Copy GoogleService-Inflo.plist to the correct location */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-				FEF8D17B4691D5EEDD956120 /* [CP] Embed Pods Frameworks */,
+				FA848B4C2C9226C200FF2E1C /* ShellScript */,
+				F36FFC06F0440DF3A5928808 /* [CP] Embed Pods Frameworks */,
+				366E7BA777E0C94EBD322BF5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -212,7 +210,7 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					97C146ED1CF9000F007C117D = {
@@ -244,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA848B4A2C92260900FF2E1C /* config in Resources */,
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
@@ -254,55 +253,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		23A4352629F4E1980076DB1A /* Setup Firebase Environment GoogleService-Info.plist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Setup Firebase Environment GoogleService-Info.plist";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\n\n# Get references to dev and prod versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO_PICKUPMVP=${PROJECT_DIR}/${TARGET_NAME}/Firebase/PickupMVP/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_RAPRULER=${PROJECT_DIR}/${TARGET_NAME}/Firebase/RapRuler/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_TRACKAUTHORITYMUSIC=${PROJECT_DIR}/${TARGET_NAME}/Firebase/TrackAuthorityMusic/${GOOGLESERVICE_INFO_PLIST}\n\n# Make sure the dev version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_PICKUPMVP}\"\nif [ ! -f $GOOGLESERVICE_INFO_PICKUPMVP ]\nthen\n    echo \"No PickupMVP GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_RAPRULER}\"\nif [ ! -f $GOOGLESERVICE_INFO_RAPRULER ]\nthen\n    echo \"No RapRuler GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_TRACKAUTHORITYMUSIC}\"\nif [ ! -f $GOOGLESERVICE_INFO_TRACKAUTHORITYMUSIC ]\nthen\n    echo \"No TrackAuthorityMusic GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy over the prod GoogleService-Info.plist for Release builds\nif [ \"${CONFIGURATION}\" == \"Debug-pickupmvp\" ] || [ \"${CONFIGURATION}\" == \"Release-pickupmvp\" ] || [ \"${CONFIGURATION}\" == \"Profile-pickupmvp\" ]\nthen\n    echo \"Using ${GOOGLESERVICE_INFO_PICKUPMVP}\"\n    cp \"${GOOGLESERVICE_INFO_PICKUPMVP}\" \"${PLIST_DESTINATION}\"\nelif [ \"${CONFIGURATION}\" == \"Debug-rapruler\" ] || [ \"${CONFIGURATION}\" == \"Release-rapruler\" ] || [ \"${CONFIGURATION}\" == \"Profile-rapruler\" ]\nthen\n    echo \"Using ${GOOGLESERVICE_INFO_RAPRULER}\"\n    cp \"${GOOGLESERVICE_INFO_RAPRULER}\" \"${PLIST_DESTINATION}\"\nelif [ \"${CONFIGURATION}\" == \"Debug-trackauthoritymusic\" ] || [ \"${CONFIGURATION}\" == \"Release-trackauthoritymusic\" ] || [ \"${CONFIGURATION}\" == \"Profile-trackauthoritymusic\" ]\nthen\n    echo \"Using ${GOOGLESERVICE_INFO_TRACKAUTHORITYMUSIC}\"\n    cp \"${GOOGLESERVICE_INFO_TRACKAUTHORITYMUSIC}\" \"${PLIST_DESTINATION}\"\nelse\n    echo \"Using ${GOOGLESERVICE_INFO_PICKUPMVP}\"\n    cp \"${GOOGLESERVICE_INFO_PICKUPMVP}\" \"${PLIST_DESTINATION}\"\nfi\n";
-		};
-		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Thin Binary";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
-		};
-		9740EEB61CF901F6004384FC /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
-		};
-		9C1D2DCC13F00FDB5E25E3CB /* [CP] Check Pods Manifest.lock */ = {
+		23DA3656CB00053CFED28972 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -324,7 +275,55 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FEF8D17B4691D5EEDD956120 /* [CP] Embed Pods Frameworks */ = {
+		366E7BA777E0C94EBD322BF5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}",
+			);
+			name = "Thin Binary";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
+		};
+		9740EEB61CF901F6004384FC /* Copy GoogleService-Inflo.plist to the correct location */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy GoogleService-Inflo.plist to the correct location";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
+		};
+		F36FFC06F0440DF3A5928808 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -340,6 +339,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FA848B4C2C9226C200FF2E1C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "environment=\"default\"\n\n# Regex to extract the scheme name from the Build Configuration\n# We have named our Build Configurations as Debug-dev, Debug-prod etc.\n# Here, dev and prod are the scheme names. This kind of naming is required by Flutter for flavors to work.\n# We are using the $CONFIGURATION variable available in the XCode build environment to extract \n# the environment (or flavor)\n# For eg.\n# If CONFIGURATION=\"Debug-prod\", then environment will get set to \"prod\".\nif [[ $CONFIGURATION =~ -([^-]*)$ ]]; then\nenvironment=${BASH_REMATCH[1]}\nfi\n\necho $environment\n\n# Name and path of the resource we're copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\nGOOGLESERVICE_INFO_FILE=${PROJECT_DIR}/config/${environment}/${GOOGLESERVICE_INFO_PLIST}\n\n# Make sure GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_FILE}\"\nif [ ! -f $GOOGLESERVICE_INFO_FILE ]\nthen\necho \"No GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\nexit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\n# This is the default location where Firebase init code expects to find GoogleServices-Info.plist file\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy over the prod GoogleService-Info.plist for Release builds\ncp \"${GOOGLESERVICE_INFO_FILE}\" \"${PLIST_DESTINATION}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -422,7 +438,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -443,7 +459,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -505,7 +521,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -522,11 +538,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/RunnerDebug-pickupmvp.entitlements";
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 4E7BA47MN7;
+				DEVELOPMENT_TEAM = C76SG5H84M;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -582,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -601,11 +617,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 4E7BA47MN7;
+				DEVELOPMENT_TEAM = C76SG5H84M;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -660,7 +676,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -683,7 +699,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -738,7 +754,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -755,11 +771,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerProfile.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 4E7BA47MN7;
+				DEVELOPMENT_TEAM = C76SG5H84M;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -814,7 +830,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -835,7 +851,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -890,7 +906,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -907,11 +923,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerProfile.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 4E7BA47MN7;
+				DEVELOPMENT_TEAM = C76SG5H84M;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -972,7 +988,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -993,7 +1009,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1049,7 +1065,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -1072,7 +1088,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1127,7 +1143,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -1148,7 +1164,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1209,7 +1225,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -1230,7 +1246,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1286,7 +1302,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -1309,7 +1325,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1364,7 +1380,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -1385,7 +1401,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1446,7 +1462,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -1496,7 +1512,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -1515,11 +1531,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerDebug.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 4E7BA47MN7;
+				DEVELOPMENT_TEAM = C76SG5H84M;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1542,11 +1558,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 4E7BA47MN7;
+				DEVELOPMENT_TEAM = C76SG5H84M;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
