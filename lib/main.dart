@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get_it/get_it.dart';
 
+import 'config/env.dart';
+import 'environment.dart';
 import 'src/web_view_stack.dart';
 
 final serviceLocator = GetIt.instance;
@@ -18,6 +20,7 @@ final serviceLocator = GetIt.instance;
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(
+    name: 'djmote-flutter',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -29,26 +32,19 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   developer.log('Handling a background message ${message.messageId}');
 }
 
-void setUp() {
-  serviceLocator.registerSingletonAsync<UrlService>(() async {
-    final urlService = UrlService();
-    await urlService.init();
-    return urlService;
-  });
-  serviceLocator.registerSingletonAsync<NotificationService>(() async {
-    final notificationService = NotificationService();
-    await notificationService.init();
-    return notificationService;
-  });
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   await FlutterConfig.loadEnvVariables();
+  const String flavor = String.fromEnvironment('FLAVOR');
+  developer.log('running flavor: $flavor');
+  Env env = fromFlavorToEnv(flavor);
+
   await Firebase.initializeApp(
+    name: env.firebaseAppName,
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  setUp();
+
+  setUp(env);
 
   // Set the background messaging handler early on, as a named top-level function
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -64,6 +60,19 @@ void main() async {
       home: const WebViewApp(),
     ),
   );
+}
+
+void setUp(Env env) {
+  serviceLocator.registerSingletonAsync<UrlService>(() async {
+    final urlService = UrlService();
+    await urlService.init();
+    return urlService;
+  });
+  serviceLocator.registerSingletonAsync<NotificationService>(() async {
+    final notificationService = NotificationService();
+    await notificationService.init();
+    return notificationService;
+  });
 }
 
 class WebViewApp extends StatefulWidget {

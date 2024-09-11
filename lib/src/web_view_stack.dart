@@ -15,6 +15,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+import '../config/config.dart';
+
 class WebViewStack extends StatefulWidget {
   const WebViewStack({super.key});
 
@@ -47,7 +49,7 @@ class _WebViewStackState extends State<WebViewStack> {
   }
 
   void onWebViewCreated(InAppWebViewController controller) {
-    _appLinks.allUriLinkStream.listen((uri) {
+    _appLinks.uriLinkStream.listen((uri) {
       developer.log('allUriLinkStream $uri');
       if (uri.toString().contains("app://${urlService.appID}")) {
         uri = Uri.parse(uri
@@ -113,89 +115,101 @@ class _WebViewStackState extends State<WebViewStack> {
             value: loadingPercentage / 100.0,
           ),
         InAppWebView(
-          onWebViewCreated: onWebViewCreated,
-          shouldInterceptRequest: (controller, request) async {
-            if (request.isForMainFrame!) {
-              final host = request.url.host;
-              developer.log('navigating host $host');
-              final allowedDomains = [
-                'youtube.com',
-                'therapruler.com',
-                'fantasytrackball.com',
-                'rsoundtrack.com',
-                'giftofmusic.app',
-                'pickupmvp.com',
-                'trackauthoritymusic.com'
-              ];
-              if (kDebugMode) {
-                allowedDomains.add('192.168.0.19');
-              }
-              if (!allowedDomains.contains(host)) {
-                if (host != '') {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Blocking navigation to $host',
-                      ),
-                      behavior: SnackBarBehavior.floating,
-                      action: SnackBarAction(
-                        label: 'Dismiss',
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        },
-                      ),
-                    ),
-                  );
-                }
-                return WebResourceResponse(
-                  statusCode: 401,
-                  data: Uint8List.fromList(
-                    utf8.encode(
-                        "<div style=\"position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);\"><h1>Unauthorized domain</h1></div>"),
-                  ),
-                );
-              }
-              return null;
-            } else {
-              return null;
-            }
-          },
-          onReceivedHttpError: (controller, request, errorResponse) {
-            // TODO: Would need to figure this out.
-            // developer.log('Error code: ${errorResponse.statusCode}');
-            // developer.log('Description: ${utf8.decode(errorResponse.data!)}');
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //     SnackBar(content: Text(utf8.decode(errorResponse.data!))));
-          },
-          onLoadStart: (controller, uri) {
-            setState(() {
-              loadingPercentage = 0;
-            });
-          },
-          onLoadStop: (controller, uri) {
-            setState(() {
-              developer.log('finished loading ${uri?.host}');
-              loadingPercentage = 100;
-            });
-          },
           initialUrlRequest: URLRequest(url: WebUri(urlService.initUrl)),
-          onReceivedServerTrustAuthRequest: (controller, challenge) async {
-            return ServerTrustAuthResponse(
-                action: ServerTrustAuthResponseAction.PROCEED);
-          },
-          onConsoleMessage: (controller, messages) {
-            developer.log(
-                '[IN_APP_BROWSER_LOG_LEVEL]: ${messages.messageLevel.toString()}');
-            developer.log('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
-          },
-          onProgressChanged: (controller, progress) {
-            if (progress == 100) {}
-            setState(() {
-              loadingPercentage = progress;
-            });
-          },
+          onWebViewCreated: onWebViewCreated,
+          shouldInterceptRequest: _onShouldInterceptRequest,
+          onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
+          onLoadStart: _onLoadStart,
+          onLoadStop: _onLoadStop,
+          onProgressChanged: _onProgressChanged,
+          onReceivedHttpError: _onReceiveHttpError,
+          onConsoleMessage: _onConsoleMessage,
         ),
       ],
     );
+  }
+
+  Future<WebResourceResponse?> _onShouldInterceptRequest(
+      InAppWebViewController controller, WebResourceRequest request) async {
+    if (!request.isForMainFrame!) return null;
+
+    final host = request.url.host;
+    developer.log('navigating host $host');
+    final allowedDomains = Config.allowedDomains;
+    if (kDebugMode) {
+      allowedDomains.add('192.168.0.19');
+    }
+    if (allowedDomains.contains(host)) return null;
+    if (host != '') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Blocking navigation to $host',
+          ),
+          behavior: SnackBarBehavior.floating,
+          action: SnackBarAction(
+            label: 'Dismiss',
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            },
+          ),
+        ),
+      );
+    }
+    return WebResourceResponse(
+      statusCode: 401,
+      data: Uint8List.fromList(
+        utf8.encode(
+            "<div style=\"position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);\"><h1>Unauthorized domain</h1></div>"),
+      ),
+    );
+  }
+
+  Future<ServerTrustAuthResponse?> _onReceivedServerTrustAuthRequest(
+      InAppWebViewController controller,
+      URLAuthenticationChallenge challenge) async {
+    return ServerTrustAuthResponse(
+        action: ServerTrustAuthResponseAction.PROCEED);
+  }
+
+  void _onLoadStart(InAppWebViewController controller, WebUri? url) {
+    (controller, uri) {
+      setState(() {
+        loadingPercentage = 0;
+      });
+    };
+  }
+
+  void _onLoadStop(InAppWebViewController controller, WebUri? url) {
+    setState(() {
+      developer.log('finished loading ${url?.host}');
+      loadingPercentage = 100;
+    });
+  }
+
+  void _onProgressChanged(InAppWebViewController controller, int progress) {
+    if (progress == 100) {
+      // todo probly could be removed
+    }
+    setState(() {
+      loadingPercentage = progress;
+    });
+  }
+
+  void _onReceiveHttpError(InAppWebViewController controller,
+      WebResourceRequest request, WebResourceResponse errorResponse) {
+    var a = 2;
+    // TODO: Would need to figure this out.
+    // developer.log('Error code: ${errorResponse.statusCode}');
+    // developer.log('Description: ${utf8.decode(errorResponse.data!)}');
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text(utf8.decode(errorResponse.data!))));
+  }
+
+  void _onConsoleMessage(
+      InAppWebViewController controller, ConsoleMessage messages) {
+    developer
+        .log('[IN_APP_BROWSER_LOG_LEVEL]: ${messages.messageLevel.toString()}');
+    developer.log('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
   }
 }
