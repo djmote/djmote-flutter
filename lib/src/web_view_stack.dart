@@ -136,10 +136,32 @@ class _WebViewStackState extends State<WebViewStack> {
     final host = request.url.host;
     developer.log('navigating host $host');
     final allowedDomains = Config.allowedDomains;
+
     if (kDebugMode) {
       allowedDomains.add('192.168.0.19');
+      allowedDomains.add('localhost');
     }
+
     if (allowedDomains.contains(host)) return null;
+
+    // Function to check if host matches any wildcard domain
+    bool isSubdomainAllowed(String host, List<String> allowedDomains) {
+      for (String domain in allowedDomains) {
+        if (domain.startsWith('*.')) {
+          // Check if host ends with the wildcard domain (e.g., *.example.com)
+          final wildcardDomain = domain.substring(2); // remove leading *
+          if (host.endsWith(wildcardDomain)) {
+            return true;
+          }
+        } else if (domain == host) {
+          return true; // Exact match
+        }
+      }
+      return false;
+    }
+
+    if (isSubdomainAllowed(host, allowedDomains)) return null;
+
     if (host != '') {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -156,6 +178,7 @@ class _WebViewStackState extends State<WebViewStack> {
         ),
       );
     }
+
     return WebResourceResponse(
       statusCode: 401,
       data: Uint8List.fromList(

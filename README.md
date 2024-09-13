@@ -12,6 +12,8 @@
 # Build to Release
 - `flutter build appbundle --flavor djmote`
 - `flutter build appbundle --flavor djmote --device-id R5CX70LQ6YY`
+- `flutter run --flavor djmote --device-id R5CX70LQ6YY`
+- `flutter run --flavor djmote --device-id  00008020-001931511403002E`
 
 ## Launching Options
 - [x] Load startup Url embedded from .env when built  
