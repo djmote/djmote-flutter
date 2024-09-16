@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 class UrlUtils {
   static buildInitUrl(baseUrl) {
     var initUrl = baseUrl;
-    if (initUrl.contains('?'))
+    if (initUrl.contains('?')) {
       initUrl += '&';
-    else
+    } else {
       initUrl += '?';
-    initUrl += 'appOS=' + Platform.operatingSystem;
-    initUrl += '&paddingTop=' +
-        MediaQueryData.fromWindow(ui.window).padding.top.toString();
-    initUrl += '&paddingBottom=' +
-        MediaQueryData.fromWindow(ui.window).padding.bottom.toString();
+    }
+    initUrl += 'appOS=${Platform.operatingSystem}';
+
+    final mediaQuery = MediaQueryData.fromView(ui.PlatformDispatcher.instance.views.first);
+    initUrl += '&paddingTop=${mediaQuery.padding.top}';
+    initUrl += '&paddingBottom=${mediaQuery.padding.bottom}';
+
     return initUrl;
   }
 }
