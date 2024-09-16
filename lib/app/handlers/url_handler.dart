@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-class UrlUtils {
-  static buildInitUrl(baseUrl) {
+class UrlHandler{
+  String buildInitUrl(String baseUrl) {
     var initUrl = baseUrl;
     if (initUrl.contains('?')) {
       initUrl += '&';

@@ -1,106 +1,70 @@
 // Copyright 2023 @ TrackAuthorityMusic.com
 
-import 'dart:developer' as developer;
-
+import 'package:TrackAuthorityMusic/app/app.dart';
+import 'package:TrackAuthorityMusic/app/config/config_factory.dart';
+import 'package:TrackAuthorityMusic/app/services/service_locator_factory.dart';
+import 'package:TrackAuthorityMusic/app/utils/debug_utils.dart';
+import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
 import 'package:TrackAuthorityMusic/firebase_options.dart';
-import 'package:TrackAuthorityMusic/services/notification_service.dart';
-import 'package:TrackAuthorityMusic/services/url_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get_it/get_it.dart';
 
-import 'config/env.dart';
-import 'environment.dart';
-import 'src/web_view_stack.dart';
+import 'app/services/notification_service.dart';
+import 'domain/notification_service/inotification_service.dart';
 
 final serviceLocator = GetIt.instance;
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  IConfig config = sl.get<IConfig>();
+
   await Firebase.initializeApp(
-    name: 'djmote-flutter',
+    name: config.firebaseAppName,
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  NotificationService notificationService =
+  INotificationService notificationService =
       serviceLocator.get<NotificationService>();
 
   await notificationService.setupFlutterNotifications();
   notificationService.showFlutterNotification(message);
-  developer.log('Handling a background message ${message.messageId}');
+  DebugUtils.printWithTime(
+      'Handling a background message ${message.messageId}');
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
-  await FlutterConfig.loadEnvVariables();
   const String flavor = String.fromEnvironment('FLAVOR');
-  developer.log('running flavor: $flavor');
+  await FlutterConfig.loadEnvVariables();
+  IConfig config = ConfigFactory.buildConfigFromFlavor(flavor);
 
-  Env env = fromFlavorToEnv(flavor);
+  DebugUtils.printWithTime(flavor);
 
   await Firebase.initializeApp(
-    name: env.firebaseAppName,
+    name: config.firebaseAppName,
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  setUp(env);
+  ServiceLocatorFactory slf = ServiceLocatorFactory();
 
+  slf.initConfig(config);
+
+  /// Notifications
+  await slf.initNotificationService();
   // Set the background messaging handler early on, as a named top-level function
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  // if (kDebugMode) {
-  //   HttpOverrides.global = MyHttpOverrides();
-  // }
+  /// Handlers
+  slf.initUrlHandler();
 
   runApp(
     MaterialApp(
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      home: const WebViewApp(),
+      home: const App(),
     ),
   );
-}
-
-void setUp(Env env) {
-  serviceLocator.registerSingletonAsync<UrlService>(() async {
-    final urlService = UrlService();
-    await urlService.init();
-    return urlService;
-  });
-  serviceLocator.registerSingletonAsync<NotificationService>(() async {
-    final notificationService = NotificationService();
-    await notificationService.init();
-    return notificationService;
-  });
-}
-
-class WebViewApp extends StatefulWidget {
-  const WebViewApp({super.key});
-
-  @override
-  State<WebViewApp> createState() => _WebViewAppState();
-}
-
-class _WebViewAppState extends State<WebViewApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-          future: serviceLocator.allReady(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return const WebViewStack();
-            } else {
-              return const CircularProgressIndicator();
-            }
-          }),
-    );
-  }
 }

@@ -5,20 +5,26 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:TrackAuthorityMusic/app/handlers/url_handler.dart';
+import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
+import 'package:TrackAuthorityMusic/domain/notification_service/inotification_service.dart';
 import 'package:TrackAuthorityMusic/main.dart';
-import 'package:TrackAuthorityMusic/services/notification_service.dart';
-import 'package:TrackAuthorityMusic/services/url_service.dart';
-import 'package:TrackAuthorityMusic/utils/url_utils.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-import '../config/config.dart';
-
 class WebViewStack extends StatefulWidget {
-  const WebViewStack({super.key});
+  final INotificationService notificationService;
+  final IConfig config;
+  final UrlHandler urlHandler;
+
+  const WebViewStack(
+      {super.key,
+      required this.notificationService,
+      required this.config,
+      required this.urlHandler});
 
   @override
   State<WebViewStack> createState() => _WebViewStackState();
@@ -27,9 +33,8 @@ class WebViewStack extends StatefulWidget {
 class _WebViewStackState extends State<WebViewStack> {
   final _appLinks = AppLinks();
 
-  NotificationService notificationService =
-      serviceLocator.get<NotificationService>();
-  UrlService urlService = serviceLocator.get<UrlService>();
+  INotificationService notificationService =
+      serviceLocator.get<INotificationService>();
 
   bool? _resolved;
   String? _token;
@@ -39,9 +44,29 @@ class _WebViewStackState extends State<WebViewStack> {
   var loadingPercentage = 0;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        if (loadingPercentage < 100)
+          LinearProgressIndicator(
+            value: loadingPercentage / 100.0,
+          ),
+        InAppWebView(
+          initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
+          onWebViewCreated: onWebViewCreated,
+          shouldInterceptRequest: _onShouldInterceptRequest,
+          onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
+          onLoadStart: _onLoadStart,
+          onLoadStop: _onLoadStop,
+          onProgressChanged: _onProgressChanged,
+          onReceivedHttpError: _onReceiveHttpError,
+          onConsoleMessage: _onConsoleMessage,
+        ),
+      ],
+    );
   }
+
+  //todo I would suggest to use Provider to separate logic from view
 
   void setToken(String? token) {
     developer.log('FCM Token: $token');
@@ -51,16 +76,16 @@ class _WebViewStackState extends State<WebViewStack> {
   void onWebViewCreated(InAppWebViewController controller) {
     _appLinks.uriLinkStream.listen((uri) {
       developer.log('allUriLinkStream $uri');
-      if (uri.toString().contains("app://${urlService.appID}")) {
+      if (uri.toString().contains("app://${widget.config.appID}")) {
         uri = Uri.parse(uri
             .toString()
-            .replaceAll(
-                "app://${urlService.appID}", 'https://${urlService.myHost}')
+            .replaceAll("app://${widget.config.appID}",
+                'https://${widget.config.myHost}')
             .replaceFirst("?", ""));
       }
 
       var initUrl = uri.toString();
-      initUrl = UrlUtils.buildInitUrl(initUrl);
+      initUrl = widget.urlHandler.buildInitUrl(initUrl);
 
       controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
     });
@@ -83,7 +108,7 @@ class _WebViewStackState extends State<WebViewStack> {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.data.containsKey("url")) {
-        var initUrl = UrlUtils.buildInitUrl(message.data["url"]);
+        var initUrl = widget.urlHandler.buildInitUrl(message.data["url"]);
         controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
       }
     });
@@ -106,36 +131,13 @@ class _WebViewStackState extends State<WebViewStack> {
         });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        if (loadingPercentage < 100)
-          LinearProgressIndicator(
-            value: loadingPercentage / 100.0,
-          ),
-        InAppWebView(
-          initialUrlRequest: URLRequest(url: WebUri(urlService.initUrl)),
-          onWebViewCreated: onWebViewCreated,
-          shouldInterceptRequest: _onShouldInterceptRequest,
-          onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
-          onLoadStart: _onLoadStart,
-          onLoadStop: _onLoadStop,
-          onProgressChanged: _onProgressChanged,
-          onReceivedHttpError: _onReceiveHttpError,
-          onConsoleMessage: _onConsoleMessage,
-        ),
-      ],
-    );
-  }
-
   Future<WebResourceResponse?> _onShouldInterceptRequest(
       InAppWebViewController controller, WebResourceRequest request) async {
     if (!request.isForMainFrame!) return null;
 
     final host = request.url.host;
     developer.log('navigating host $host');
-    final allowedDomains = Config.allowedDomains;
+    final allowedDomains = widget.config.allowedDomains;
 
     if (kDebugMode) {
       allowedDomains.add('192.168.0.19');
