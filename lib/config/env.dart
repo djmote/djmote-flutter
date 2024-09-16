@@ -33,7 +33,7 @@ Env fromFlavorToEnv(String flavor) {
     default:
 
     /// you should do some default env
-    /// for now, for test I am using pickupmvp
-      return Env.pickupmvp;
+    /// for now, for test I am using djmote
+      return Env.djmote;
   }
 }

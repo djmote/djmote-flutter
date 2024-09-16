@@ -10,10 +10,14 @@
 - ex. `flutter run --device-id R5CX70LQ6YY`
 
 # Build to Release
-- `flutter build appbundle --flavor djmote`
+- `flutter build appbundle --flavor djmote`cd 
 - `flutter build appbundle --flavor djmote --device-id R5CX70LQ6YY`
 - `flutter run --flavor djmote --device-id R5CX70LQ6YY`
 - `flutter run --flavor djmote --device-id  00008020-001931511403002E`
+
+# Build iOS to Release:
+- `flutter build ios --flavor djmote` will update generated files derivded from .env.flavor
+- Open Xcode and run Archive
 
 ## Launching Options
 - [x] Load startup Url embedded from .env when built  
@@ -48,4 +52,4 @@
 ## To Add a Brand For ioS:
 - edit `.env.[brand]` with correct firebase values from `google-services.json`
 - create Schema from xCode, duplicate a config and change the env file brand. 
-- change pre-run script to use new env file
+- change pre-run script to use new env file: manage schemes > build > pre-actions: (`echo ".env.djmote" > ${SRCROOT}/.envfile`)
