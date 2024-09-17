@@ -60,5 +60,5 @@
 
 ## To Add a Brand For Flutter
 - create an implementation of IConfig with Brand's data in the `lib/app/config/configs`
-- add newly created config to a ConfigFactory in the `lib/app/config/`
+- add newly created config to a ConfigFactory in the `lib/app/config/`; add a domain to an `allowedDomains`
 - IDE -> edit run config -> additional run arguments -> --dart-define=FLAVOR=[brand] --flavor [brand] 
