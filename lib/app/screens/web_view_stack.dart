@@ -8,7 +8,6 @@ import 'dart:developer' as developer;
 import 'package:TrackAuthorityMusic/app/handlers/url_handler.dart';
 import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
 import 'package:TrackAuthorityMusic/domain/notification_service/inotification_service.dart';
-import 'package:TrackAuthorityMusic/main.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -16,26 +15,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebViewStack extends StatefulWidget {
-  final INotificationService notificationService;
   final IConfig config;
+  final AppLinks appLinks;
   final UrlHandler urlHandler;
+  final INotificationService notificationService;
 
-  const WebViewStack(
-      {super.key,
-      required this.notificationService,
-      required this.config,
-      required this.urlHandler});
+  const WebViewStack({
+    super.key,
+    required this.config,
+    required this.appLinks,
+    required this.urlHandler,
+    required this.notificationService,
+  });
 
   @override
   State<WebViewStack> createState() => _WebViewStackState();
 }
 
 class _WebViewStackState extends State<WebViewStack> {
-  final _appLinks = AppLinks();
-
-  INotificationService notificationService =
-      serviceLocator.get<INotificationService>();
-
   bool? _resolved;
   String? _token;
   late Stream<String> _tokenStream;
@@ -74,7 +71,7 @@ class _WebViewStackState extends State<WebViewStack> {
   }
 
   void onWebViewCreated(InAppWebViewController controller) {
-    _appLinks.uriLinkStream.listen((uri) {
+    widget.appLinks.uriLinkStream.listen((uri) {
       developer.log('allUriLinkStream $uri');
       if (uri.toString().contains("app://${widget.config.appID}")) {
         uri = Uri.parse(uri
@@ -104,7 +101,7 @@ class _WebViewStackState extends State<WebViewStack> {
     _tokenStream.listen(setToken);
 
     FirebaseMessaging.onMessage
-        .listen(notificationService.showFlutterNotification);
+        .listen(widget.notificationService.showFlutterNotification);
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.data.containsKey("url")) {
@@ -117,7 +114,7 @@ class _WebViewStackState extends State<WebViewStack> {
         handlerName: 'SnackBar',
         callback: (args) {
           String message = args.reduce((curr, next) => curr + next);
-          developer.log('failed loading ' + message);
+          developer.log('failed loading $message');
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(message),
             behavior: SnackBarBehavior.fixed,

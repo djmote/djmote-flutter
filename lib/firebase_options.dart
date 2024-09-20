@@ -51,22 +51,22 @@ class DefaultFirebaseOptions {
   }
   //todo this should be extracted to a .env as well
   static FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB332_pe6xJNcLXIU9i4X6s-RXvMUFSdeM',
+    apiKey: FlutterConfig.get("ANDROID_API_KEY"),
     appId: FlutterConfig.get("ANDROID_APP_ID"),
-    messagingSenderId: '364436864658',
-    projectId: 'trackauthoritymusic',
-    databaseURL: 'https://trackauthoritymusic.firebaseio.com',
-    storageBucket: 'trackauthoritymusic.appspot.com',
+    messagingSenderId: FlutterConfig.get("MESSAGING_SENDER_ID"),
+    projectId: FlutterConfig.get("PROJECT_ID"),
+    databaseURL: FlutterConfig.get("DATABASE_URL"),
+    storageBucket: FlutterConfig.get("STORAGE_BUCKET"),
   );
   
   //todo this should be extracted to a .env as well
   static FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDkC-fC6GLFpkqbDtcrh1oT1px5ZCeBZvY',
+    apiKey: FlutterConfig.get("IOS_API_KEY"),
     appId: FlutterConfig.get("IOS_APP_ID"),
-    messagingSenderId: '364436864658',
-    projectId: 'trackauthoritymusic',
-    databaseURL: 'https://trackauthoritymusic.firebaseio.com',
-    storageBucket: 'trackauthoritymusic.appspot.com',
+    messagingSenderId: FlutterConfig.get("MESSAGING_SENDER_ID"),
+    projectId: FlutterConfig.get("PROJECT_ID"),
+    databaseURL: FlutterConfig.get("DATABASE_URL"),
+    storageBucket: FlutterConfig.get("STORAGE_BUCKET"),
     androidClientId: FlutterConfig.get("ANDROID_CLIENT_ID"),
     iosClientId: FlutterConfig.get("IOS_CLIENT_ID"),
     iosBundleId: FlutterConfig.get("APP_PACKAGE_ID"),
