@@ -49,7 +49,7 @@ class DefaultFirebaseOptions {
         );
     }
   }
-  //todo this should be extracted to a .env as well
+
   static FirebaseOptions android = FirebaseOptions(
     apiKey: FlutterConfig.get("ANDROID_API_KEY"),
     appId: FlutterConfig.get("ANDROID_APP_ID"),
@@ -58,8 +58,7 @@ class DefaultFirebaseOptions {
     databaseURL: FlutterConfig.get("DATABASE_URL"),
     storageBucket: FlutterConfig.get("STORAGE_BUCKET"),
   );
-  
-  //todo this should be extracted to a .env as well
+
   static FirebaseOptions ios = FirebaseOptions(
     apiKey: FlutterConfig.get("IOS_API_KEY"),
     appId: FlutterConfig.get("IOS_APP_ID"),
