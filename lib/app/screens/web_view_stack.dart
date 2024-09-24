@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:TrackAuthorityMusic/app/handlers/url_handler.dart';
+import 'package:TrackAuthorityMusic/app/services/service_locator_factory.dart';
+import 'package:TrackAuthorityMusic/domain/authentication_service/iauthentication_service.dart';
 import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
 import 'package:TrackAuthorityMusic/domain/notification_service/inotification_service.dart';
 import 'package:app_links/app_links.dart';
@@ -230,8 +232,23 @@ class _WebViewStackState extends State<WebViewStack> {
 
   void _onConsoleMessage(
       InAppWebViewController controller, ConsoleMessage messages) {
+    if (messages.message.contains('FROM FLUTTER')) {
+      _authenticateGoogleWithOAuth();
+
+      ///POST TOKEN FROM AUTH LIKE THIS
+      /// controller.postWebMessage(
+      ///   message: WebMessage(
+      ///     data: {'token':'Google button pressed'},
+      ///   ),
+      /// );
+    }
     developer
         .log('[IN_APP_BROWSER_LOG_LEVEL]: ${messages.messageLevel.toString()}');
     developer.log('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
+  }
+
+  Future<void> _authenticateGoogleWithOAuth() async {
+    final String token =
+        await sl.get<IAuthenticationService>().authenticateGoogle();
   }
 }

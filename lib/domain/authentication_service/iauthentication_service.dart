@@ -1,3 +1,3 @@
 abstract interface class IAuthenticationService{
-  Future<void> authenticateGoogle();
+  Future<String> authenticateGoogle();
 }

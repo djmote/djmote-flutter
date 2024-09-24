@@ -39,7 +39,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   const String flavor = String.fromEnvironment('FLAVOR');
   await FlutterConfig.loadEnvVariables();
-  IConfig config = ConfigFactory.buildConfigFromFlavor(flavor);
+  IConfig config = ConfigFactory.buildConfigFromFlavor('djmote'); //flavor);
 
   DebugUtils.printWithTime(flavor);
 
@@ -59,6 +59,12 @@ void main() async {
 
   /// Handlers
   slf.initUrlHandler();
+
+  /// Services
+  slf.initAuthenticationService(
+    googleClientId: FlutterConfig.get("ANDROID_CLIENT_ID"),
+    callbackUrlScheme: FlutterConfig.get("CALLBACK_URL_SCHEME"),
+  );
 
   runApp(
     MaterialApp(
