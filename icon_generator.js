@@ -158,4 +158,4 @@ function buildAll(appName, size, bgColor) {
 // buildAll('rapruler', '1125x2436', '#202020');
 // buildAll('pickupmvp', '640x1136', '#211645');
 buildAll('djmote', '860x1900', '#000000');
-buildiOSScreenshots('djmote', '860x1900', "#000000");
+// buildiOSScreenshots('djmote', '860x1900', "#000000");

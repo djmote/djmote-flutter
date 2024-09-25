@@ -4,19 +4,22 @@
 # Android Test install: 
 - https://play.google.com/apps/internaltest/4700937001191384768
 
+# clean
+- flutter clean && cd ios && pod deintegrate && pod cache clean --all && rm -rf ~/Library/Developer/Xcode/DerivedData && cd .. && flutter pub get && cd ios && pod install
+
 # Build to Debug
 - simply replace the contents of `.env` with the .env.[brand] you want to build
 - then `flutter run` or `flutter run --release`
 - ex. `flutter run --device-id R5CX70LQ6YY`
 
 # Build to Release
-- `flutter build appbundle --flavor djmote`cd 
-- `flutter build appbundle --flavor djmote --device-id R5CX70LQ6YY`
+- `flutter build appbundle --flavor djmote`
+- `flutter build apk --flavor djmote`
 - `flutter run --flavor djmote --device-id R5CX70LQ6YY`
 - `flutter run --flavor djmote --device-id  00008020-001931511403002E`
 
 # Build iOS to Release:
-- `flutter build ios --flavor djmote` will update generated files derivded from .env.flavor
+- `flutter build ios --flavor djmote` will update generated files derived from .env.flavor
 - Open Xcode and run Archive
 
 ## Launching Options
