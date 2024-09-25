@@ -39,6 +39,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   const String flavor = String.fromEnvironment('FLAVOR');
   await FlutterConfig.loadEnvVariables();
+  ///TODO remove before push
   IConfig config = ConfigFactory.buildConfigFromFlavor('djmote'); //flavor);
 
   DebugUtils.printWithTime(flavor);
