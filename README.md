@@ -30,7 +30,7 @@
 - OnLoad WebView always adds query parameters `appPlatform` (for client controls), `paddingTop` & `paddingBottom` (for safearea).
 
 ## Firebase Notification Test
-- Goto [Firebase Notification](https://console.firebase.google.com/u/0/project/trackauthoritymusic/messaging)
+- Go to [Firebase Notification](https://console.firebase.google.com/u/0/project/trackauthoritymusic/messaging)
 - Click on New Campaign Button, and then click on notifications
 - Add notification title and text, click NEXT and select target devices.
 - Enter Schedule date and click on NEXT
