@@ -202,10 +202,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_inappwebview_android
-      sha256: "3556d47c28369162b92c53243fa1f3e6672fc6c0b180d06d482f62c93fc87d56"
+      sha256: "269a7f620103402c579fa353a31372c8525d533ea0b83ccf893f29a948b1fe28"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.0+1"
   flutter_inappwebview_internal_annotations:
     dependency: transitive
     description:

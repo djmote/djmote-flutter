@@ -5,6 +5,7 @@
 - https://play.google.com/apps/internaltest/4700937001191384768
 
 # clean
+- rm -rf ~/Library/Developer/Xcode/DerivedData
 - flutter clean && cd ios && pod deintegrate && pod cache clean --all && rm -rf Pods && rm -f Podfile.lock && cd .. && flutter pub get && cd ios && pod install --repo-update
 
 # Build to Debug
