@@ -1,5 +1,6 @@
 import 'package:TrackAuthorityMusic/app/handlers/url_handler.dart';
 import 'package:TrackAuthorityMusic/app/screens/web_view_stack.dart';
+import 'package:TrackAuthorityMusic/domain/authentication_service/iauthentication_service.dart';
 import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
 import 'package:TrackAuthorityMusic/domain/notification_service/inotification_service.dart';
 import 'package:app_links/app_links.dart';
@@ -23,6 +24,7 @@ class _WebViewAppState extends State<App> {
         config: sl.get<IConfig>(),
         urlHandler: sl.get<UrlHandler>(),
         notificationService: sl.get<INotificationService>(),
+        authenticationService: sl.get<IAuthenticationService>(),
       ),
     );
   }

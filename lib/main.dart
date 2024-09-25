@@ -61,10 +61,7 @@ void main() async {
   slf.initUrlHandler();
 
   /// Services
-  slf.initAuthenticationService(
-    googleClientId: FlutterConfig.get("ANDROID_CLIENT_ID"),
-    callbackUrlScheme: FlutterConfig.get("CALLBACK_URL_SCHEME"),
-  );
+  slf.initAuthenticationService();
 
   runApp(
     MaterialApp(

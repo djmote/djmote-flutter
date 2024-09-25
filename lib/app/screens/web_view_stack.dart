@@ -21,6 +21,7 @@ class WebViewStack extends StatefulWidget {
   final AppLinks appLinks;
   final UrlHandler urlHandler;
   final INotificationService notificationService;
+  final IAuthenticationService authenticationService;
 
   const WebViewStack({
     super.key,
@@ -28,6 +29,7 @@ class WebViewStack extends StatefulWidget {
     required this.appLinks,
     required this.urlHandler,
     required this.notificationService,
+    required this.authenticationService,
   });
 
   @override
@@ -233,22 +235,25 @@ class _WebViewStackState extends State<WebViewStack> {
   void _onConsoleMessage(
       InAppWebViewController controller, ConsoleMessage messages) {
     if (messages.message.contains('FROM FLUTTER')) {
-      _authenticateGoogleWithOAuth();
-
-      ///POST TOKEN FROM AUTH LIKE THIS
-      /// controller.postWebMessage(
-      ///   message: WebMessage(
-      ///     data: {'token':'Google button pressed'},
-      ///   ),
-      /// );
+      _authenticateGoogleWithOAuth(controller);
     }
     developer
         .log('[IN_APP_BROWSER_LOG_LEVEL]: ${messages.messageLevel.toString()}');
     developer.log('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
   }
 
-  Future<void> _authenticateGoogleWithOAuth() async {
+  Future<void> _authenticateGoogleWithOAuth(
+      InAppWebViewController controller) async {
     final String token =
-        await sl.get<IAuthenticationService>().authenticateGoogle();
+        await widget.authenticationService.authenticateGoogle();
+    if (token.isNotEmpty) {
+      final Map<String, String> authData = {
+        'type': 'auth-request',
+        'provider': 'google',
+        'token': token,
+      };
+      controller.evaluateJavascript(
+          source: 'postMessage(${authData.toString()})');
+    }
   }
 }

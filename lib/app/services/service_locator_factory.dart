@@ -23,15 +23,9 @@ class ServiceLocatorFactory {
     sl.registerFactory<UrlHandler>(() => UrlHandler());
   }
 
-  void initAuthenticationService({
-    required String googleClientId,
-    required String callbackUrlScheme,
-  }) {
+  void initAuthenticationService() {
     sl.registerSingleton<IAuthenticationService>(
-      AuthenticationService(
-        googleClientId: googleClientId,
-        callbackUrlScheme: callbackUrlScheme,
-      ),
+      AuthenticationService(),
     );
   }
 }
