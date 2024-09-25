@@ -2,6 +2,7 @@
 -keep class com.pickupmvp.BuildConfig { *; }
 -keep class com.rapruler.BuildConfig { *; }
 -keep class com.fantasyjams.BuildConfig { *; }
+-keep class com.djmote.app.BuildConfig { *; }
 
 
 # APP LINKS RULES -- START

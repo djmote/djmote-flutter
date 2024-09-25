@@ -10,8 +10,14 @@
 - ex. `flutter run --device-id R5CX70LQ6YY`
 
 # Build to Release
-- `flutter build appbundle --flavor djmote`
+- `flutter build appbundle --flavor djmote`cd 
 - `flutter build appbundle --flavor djmote --device-id R5CX70LQ6YY`
+- `flutter run --flavor djmote --device-id R5CX70LQ6YY`
+- `flutter run --flavor djmote --device-id  00008020-001931511403002E`
+
+# Build iOS to Release:
+- `flutter build ios --flavor djmote` will update generated files derivded from .env.flavor
+- Open Xcode and run Archive
 
 ## Launching Options
 - [x] Load startup Url embedded from .env when built  
@@ -37,13 +43,22 @@
 - Group Invite, Lands on Rewards Dashboard: `xcrun simctl openurl booted 'https://pickupmvp.com/otp/group_invite/accept/1903/b1dc5133e71985d8c0671a291d6b9966/61?q=/group/61/rewards'`
 - Forgot Password: `xcrun simctl openurl booted 'https://pickupmvp.com/otp/account_otp/accept/1911/a8136bca890667fa98dc0f5e2a0d0546'`
 
+
 ## To Add a Brand For Android:
 - edit `.env.[brand]` with correct firebase values from `google-services.json`
-- add config in `project.ext.envConfigFiles` of build.gradle
+- add flavor folder with brand name `android/app/src/[brand]`
+- save `google-services.json` to the `android/app/src/[brand]`
+- create dedication `/app/src/[brand]/res` folder with icons
+- add config in `project.ext.envConfigFiles` of `android/app/build.gradle`
+- add config in `productFlavors` of `android/app/build.gradle` 
 - from /android folder: `ENVFILE=.env.[brand] ./gradlew assembleDebug`
-- create dedication /app/src/[brand]/res folder with icons
-- 
-## To Add a Brand For ioS:
-- edit `.env.[brand]` with correct firebase values from `google-services.json`
+
+## To Add a Brand For IOS:
+- edit `.env.[brand]` with correct firebase values from `GoogleService-Info.plist`
 - create Schema from xCode, duplicate a config and change the env file brand. 
-- change pre-run script to use new env file
+- change pre-run script to use new env file: manage schemes > build > pre-actions: (`echo ".env.[brand]" > ${SRCROOT}/.envfile`)
+
+## To Add a Brand For Flutter
+- create an implementation of IConfig with Brand's data in the `lib/app/config/configs`
+- add newly created config to a ConfigFactory in the `lib/app/config/`; add a domain to an `allowedDomains`
+- IDE -> edit run config -> additional run arguments -> --dart-define=FLAVOR=[brand] --flavor [brand] 

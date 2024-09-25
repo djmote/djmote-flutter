@@ -2,24 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>364436864658-9mttnpphnl7ul8sg8bochgg2jhk4dtnm.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.364436864658-9mttnpphnl7ul8sg8bochgg2jhk4dtnm</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>364436864658-85gksfqjog7im2cd4q0g3h8lh780kpta.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDkC-fC6GLFpkqbDtcrh1oT1px5ZCeBZvY</string>
+	<string>AIzaSyDvNZWxmAFKfs_sakbdxN_R-VF4JPCiOww</string>
 	<key>GCM_SENDER_ID</key>
-	<string>364436864658</string>
+	<string>768554039085</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.therapruler</string>
+	<string>com.djmote.app</string>
 	<key>PROJECT_ID</key>
-	<string>trackauthoritymusic</string>
+	<string>djmote-365</string>
 	<key>STORAGE_BUCKET</key>
-	<string>trackauthoritymusic.appspot.com</string>
+	<string>djmote-365.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:364436864658:ios:3e0244ff56ed4d166e304b</string>
-	<key>DATABASE_URL</key>
-	<string>https://trackauthoritymusic.firebaseio.com</string>
+	<string>1:768554039085:ios:8a371da14526838398c5a4</string>
 </dict>
 </plist>

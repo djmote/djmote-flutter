@@ -49,7 +49,7 @@ class DefaultFirebaseOptions {
         );
     }
   }
-
+  //todo this should be extracted to a .env as well
   static FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB332_pe6xJNcLXIU9i4X6s-RXvMUFSdeM',
     appId: FlutterConfig.get("ANDROID_APP_ID"),
@@ -58,7 +58,8 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://trackauthoritymusic.firebaseio.com',
     storageBucket: 'trackauthoritymusic.appspot.com',
   );
-
+  
+  //todo this should be extracted to a .env as well
   static FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDkC-fC6GLFpkqbDtcrh1oT1px5ZCeBZvY',
     appId: FlutterConfig.get("IOS_APP_ID"),
