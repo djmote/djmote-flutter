@@ -5,7 +5,7 @@
 - https://play.google.com/apps/internaltest/4700937001191384768
 
 # clean
-- flutter clean && cd ios && pod deintegrate && pod cache clean --all && rm -rf ~/Library/Developer/Xcode/DerivedData && cd .. && flutter pub get && cd ios && pod install
+- flutter clean && cd ios && pod deintegrate && pod cache clean --all && rm -rf Pods && rm -f Podfile.lock && cd .. && flutter pub get && cd ios && pod install --repo-update
 
 # Build to Debug
 - simply replace the contents of `.env` with the .env.[brand] you want to build
