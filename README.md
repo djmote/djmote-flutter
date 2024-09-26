@@ -9,8 +9,8 @@
 - then `flutter run` or `flutter run --release`
 - ex. `flutter run --device-id R5CX70LQ6YY`
 
-# Build to Release
-- `flutter build appbundle --flavor djmote`
+# Build to Releaseflutter build appbundle --flavor djmote
+- ``
 - `flutter build apk --flavor djmote`
 - `flutter run --flavor djmote --device-id R5CX70LQ6YY`
 - `flutter run --flavor djmote --device-id  00008020-001931511403002E`
