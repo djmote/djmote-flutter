@@ -52,7 +52,7 @@ class _WebViewStackState extends State<WebViewStack> {
             value: loadingPercentage / 100.0,
           ),
         InAppWebView(
-          initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
+          initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl ?? "https://djmote.com")),
           onWebViewCreated: onWebViewCreated,
           shouldInterceptRequest: _onShouldInterceptRequest,
           onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,

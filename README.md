@@ -4,10 +4,6 @@
 # Android Test install: 
 - https://play.google.com/apps/internaltest/4700937001191384768
 
-# clean
-- rm -rf ~/Library/Developer/Xcode/DerivedData
-- flutter clean && cd ios && pod deintegrate && pod cache clean --all && rm -rf Pods && rm -f Podfile.lock && cd .. && flutter pub get && cd ios && pod install --repo-update
-
 # Build to Debug
 - simply replace the contents of `.env` with the .env.[brand] you want to build
 - then `flutter run` or `flutter run --release`
@@ -22,6 +18,10 @@
 # Build iOS to Release:ios/Runner.xcodeproj/project.pbxproj
 - `flutter build ios --flavor djmote` will update generated files derived from .env.flavor
 - Open Xcode and run Archive
+
+# deep ios clean
+- rm -rf ~/Library/Developer/Xcode/DerivedData
+- flutter clean && cd ios && pod deintegrate && pod cache clean --all && rm -rf Pods && rm -f Podfile.lock && cd .. && flutter pub get && cd ios && pod install --repo-update
 
 ## Launching Options
 - [x] Load startup Url embedded from .env when built  
