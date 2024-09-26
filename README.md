@@ -19,7 +19,7 @@
 - `flutter run --flavor djmote --device-id R5CX70LQ6YY`
 - `flutter run --flavor djmote --device-id  00008020-001931511403002E`
 
-# Build iOS to Release:
+# Build iOS to Release:ios/Runner.xcodeproj/project.pbxproj
 - `flutter build ios --flavor djmote` will update generated files derived from .env.flavor
 - Open Xcode and run Archive
 
