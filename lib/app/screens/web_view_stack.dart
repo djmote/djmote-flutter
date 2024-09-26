@@ -248,7 +248,7 @@ class _WebViewStackState extends State<WebViewStack> {
         await widget.authenticationService.authenticateGoogle();
     if (token.isNotEmpty) {
       final Map<String, String> authData = {
-        'type': 'auth-request',
+        'type': 'auth-response',
         'provider': 'google',
         'token': token,
       };
