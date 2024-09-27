@@ -40,7 +40,7 @@ void main() async {
   const String flavor = String.fromEnvironment('FLAVOR');
   await FlutterConfig.loadEnvVariables();
   ///TODO remove before push
-  IConfig config = ConfigFactory.buildConfigFromFlavor('djmote'); //flavor);
+  IConfig config = ConfigFactory.buildConfigFromFlavor(flavor);
 
   DebugUtils.printWithTime(flavor);
 

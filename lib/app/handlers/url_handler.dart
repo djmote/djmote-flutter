@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 class UrlHandler{
   String buildInitUrl(String baseUrl) {
     var initUrl = baseUrl;
-    initUrl += '/account/login/';
+    // initUrl += '/account/login/';
     if (initUrl.contains('?')) {
       initUrl += '&';
     } else {
