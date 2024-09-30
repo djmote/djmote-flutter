@@ -12,6 +12,7 @@ class ConfigFactory {
     String appId = FlutterConfig.get("APP_ID");
     String clientHost = FlutterConfig.get("CLIENT_HOST");
     String initUrl = UrlHandler().buildInitUrl('https://$clientHost');
+    String firebaseAppName = FlutterConfig.get('APP_NAME');
 
     //todo You can customize domains for each flavor, or use them as common
     List<String> allowedDomains = [
@@ -53,7 +54,7 @@ class ConfigFactory {
 
           /// I would suggest to extract port to an .env file as well
           port: '1340',
-          firebaseAppName: clientHost,
+          firebaseAppName: firebaseAppName,
           allowedDomains: allowedDomains,
         );
       case 'rapruler':
@@ -62,7 +63,7 @@ class ConfigFactory {
           initUrl: initUrl,
           myHost: clientHost,
           port: '1339',
-          firebaseAppName: clientHost,
+          firebaseAppName: firebaseAppName,
           allowedDomains: allowedDomains,
         );
       case 'djmote':
@@ -71,7 +72,7 @@ class ConfigFactory {
           initUrl: initUrl,
           myHost: clientHost,
           port: '1337',
-          firebaseAppName: clientHost,
+          firebaseAppName: firebaseAppName,
           allowedDomains: allowedDomains,
         );
       default:
