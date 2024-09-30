@@ -9,11 +9,14 @@ import 'package:TrackAuthorityMusic/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get_it/get_it.dart';
 
 import 'app/services/notification_service.dart';
 import 'domain/notification_service/inotification_service.dart';
+
+const String _flavorString = 'FLUTTER_APP_FLAVOR';
 
 final serviceLocator = GetIt.instance;
 
@@ -37,7 +40,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
-  const String flavor = String.fromEnvironment('FLAVOR');
+  const String flavor = appFlavor ?? String.fromEnvironment(_flavorString);
   await FlutterConfig.loadEnvVariables();
   IConfig config = ConfigFactory.buildConfigFromFlavor(flavor);
 
