@@ -14,6 +14,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 
 class WebViewStack extends StatefulWidget {
   final INotificationService notificationService;
@@ -43,6 +45,27 @@ class _WebViewStackState extends State<WebViewStack> {
 
   var loadingPercentage = 0;
 
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermissions(); // Request permissions on initialization
+  }
+
+  // Request camera and photo permissions
+  Future<void> requestPermissions() async {
+    var cameraStatus = await Permission.camera.status;
+    if (!cameraStatus.isGranted) {
+      await Permission.camera.request();
+    }
+
+    var photoStatus = await Permission.photos.status;
+    if (!photoStatus.isGranted) {
+      await Permission.photos.request();
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -51,17 +74,19 @@ class _WebViewStackState extends State<WebViewStack> {
           LinearProgressIndicator(
             value: loadingPercentage / 100.0,
           ),
-        InAppWebView(
-          initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl ?? "https://djmote.com")),
-          onWebViewCreated: onWebViewCreated,
-          shouldInterceptRequest: _onShouldInterceptRequest,
-          onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
-          onLoadStart: _onLoadStart,
-          onLoadStop: _onLoadStop,
-          onProgressChanged: _onProgressChanged,
-          onReceivedHttpError: _onReceiveHttpError,
-          onConsoleMessage: _onConsoleMessage,
-        ),
+      SafeArea(
+            child: InAppWebView(
+              initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl ?? "https://djmote.com")),
+              onWebViewCreated: onWebViewCreated,
+              shouldInterceptRequest: _onShouldInterceptRequest,
+              onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
+              onLoadStart: _onLoadStart,
+              onLoadStop: _onLoadStop,
+              onProgressChanged: _onProgressChanged,
+              onReceivedHttpError: _onReceiveHttpError,
+              onConsoleMessage: _onConsoleMessage,
+            ),
+        )
       ],
     );
   }
@@ -84,7 +109,7 @@ class _WebViewStackState extends State<WebViewStack> {
             .replaceFirst("?", ""));
       }
 
-      var initUrl = uri.toString();
+      var initUrl = uri.toString() ?? "https://djmote.com";
       initUrl = widget.urlHandler.buildInitUrl(initUrl);
 
       controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));

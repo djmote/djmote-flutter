@@ -9,8 +9,8 @@ import 'package:flutter_config/flutter_config.dart';
 
 class ConfigFactory {
   static IConfig buildConfigFromFlavor(String flavor) {
-    String appId = FlutterConfig.get("APP_ID");
-    String clientHost = FlutterConfig.get("CLIENT_HOST");
+    String appId = FlutterConfig.get("APP_ID") ?? "djmote.com.app";
+    String clientHost = FlutterConfig.get("CLIENT_HOST") ? "djmote.com";
     String initUrl = UrlHandler().buildInitUrl('https://$clientHost');
 
     //todo You can customize domains for each flavor, or use them as common
@@ -75,7 +75,15 @@ class ConfigFactory {
           allowedDomains: allowedDomains,
         );
       default:
-        throw NoConfigException();
+        return DjmoteConfig(
+          appID: appId,
+          initUrl: initUrl,
+          myHost: clientHost,
+          port: '1337',
+          firebaseAppName: clientHost,
+          allowedDomains: allowedDomains,
+        );
+        /// throw NoConfigException();
     }
   }
 }
