@@ -1,10 +1,15 @@
 import 'dart:io';
 
+import 'package:TrackAuthorityMusic/domain/notification_service/inotification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class NotificationService {
+const String _notificationChannelDefault = 'default_notification_channel_id';
+const String _notificationImportance = 'High Importance Notifications';
+const String _notificationDescription = 'This channel is used for important notifications.';
+
+class NotificationService implements INotificationService{
   AndroidNotificationChannel? channel;
 
   /// Initialize the [FlutterLocalNotificationsPlugin] package.
@@ -12,23 +17,28 @@ class NotificationService {
 
   bool isFlutterLocalNotificationsInitialized = false;
 
+  @override
   Future<void> init() async {
     if (!kIsWeb) {
+      //todo permissions should be asked first, and only then we can init the service
       await setupFlutterNotifications();
 
+      //todo Permission flow should be implemented
       isAndroidPermissionGranted();
       requestPermissions();
+
     }
   }
 
+  @override
   Future<void> setupFlutterNotifications() async {
     if (isFlutterLocalNotificationsInitialized) {
       return;
     }
     channel = const AndroidNotificationChannel(
-      'default_notification_channel_id',
-      'High Importance Notifications',
-      description: 'This channel is used for important notifications.',
+      _notificationChannelDefault,
+      _notificationImportance,
+      description: _notificationDescription,
       importance: Importance.high,
     );
 
@@ -48,6 +58,7 @@ class NotificationService {
     isFlutterLocalNotificationsInitialized = true;
   }
 
+  @override
   void showFlutterNotification(RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
