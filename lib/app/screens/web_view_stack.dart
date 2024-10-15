@@ -20,11 +20,10 @@ class WebViewStack extends StatefulWidget {
   final IConfig config;
   final UrlHandler urlHandler;
 
-  const WebViewStack(
-      {super.key,
-      required this.notificationService,
-      required this.config,
-      required this.urlHandler});
+  const WebViewStack({super.key,
+    required this.notificationService,
+    required this.config,
+    required this.urlHandler});
 
   @override
   State<WebViewStack> createState() => _WebViewStackState();
@@ -33,8 +32,12 @@ class WebViewStack extends StatefulWidget {
 class _WebViewStackState extends State<WebViewStack> {
   final _appLinks = AppLinks();
 
+  bool _showCloseButton = false; // To track the visibility of the close button
+  InAppWebViewController? _webViewController;
+  bool _useSafeArea = true; // State to track SafeArea usage
+
   INotificationService notificationService =
-      serviceLocator.get<INotificationService>();
+  serviceLocator.get<INotificationService>();
 
   bool? _resolved;
   String? _token;
@@ -43,26 +46,88 @@ class _WebViewStackState extends State<WebViewStack> {
 
   var loadingPercentage = 0;
 
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        if (loadingPercentage < 100)
-          LinearProgressIndicator(
-            value: loadingPercentage / 100.0,
-          ),
-        InAppWebView(
-          initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
-          onWebViewCreated: onWebViewCreated,
-          shouldInterceptRequest: _onShouldInterceptRequest,
-          onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
-          onLoadStart: _onLoadStart,
-          onLoadStop: _onLoadStop,
-          onProgressChanged: _onProgressChanged,
-          onReceivedHttpError: _onReceiveHttpError,
-          onConsoleMessage: _onConsoleMessage,
-        ),
-      ],
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          if (loadingPercentage < 100)
+            LinearProgressIndicator(
+              value: loadingPercentage / 100.0,
+            ),
+          _useSafeArea
+              ? SafeArea(child: _buildWebView())
+              : _buildWebView(),
+          // Show the close button if _showCloseButton is true
+          if (_showCloseButton)
+            Positioned(
+              top: 20,
+              right: 20,
+              child: FloatingActionButton(
+                backgroundColor: Colors.red,
+                child: Icon(Icons.close),
+                onPressed: () async {
+                  setState(() {
+                    _showCloseButton = false;
+                  });
+                  if (_webViewController != null) {
+                    // Go back to the previous page or close the in-app browser
+                    bool canGoBack = await _webViewController!.canGoBack();
+                    if (canGoBack) {
+                      _webViewController!.goBack();
+                    } else {
+                      // If there's no history, reload the initial URL or handle appropriately
+                      _webViewController!.loadUrl(
+                        urlRequest: URLRequest(url: WebUri(widget.config
+                            .initUrl)),
+                      );
+                    }
+                  }
+                },
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWebView() {
+    return InAppWebView(
+      initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
+      onWebViewCreated: (controller) {
+        _webViewController = controller;
+        onWebViewCreated(controller);
+      },
+      shouldInterceptRequest: _onShouldInterceptRequest,
+      onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
+      onLoadStart: _onLoadStart,
+      onLoadStop: _onLoadStop,
+      onProgressChanged: _onProgressChanged,
+      onReceivedHttpError: _onReceiveHttpError,
+      onConsoleMessage: _onConsoleMessage,
+      onLoadResource: (controller, resource) {
+        // Listen for postMessage events
+        controller.addJavaScriptHandler(
+          handlerName: 'permissions.request',
+          callback: (args) {
+            developer.log('Permissions requested: $args');
+            // Handle permissions.request event
+          },
+        );
+
+        controller.addJavaScriptHandler(
+            handlerName: 'oauth.started',
+            callback: (args) {
+              developer.log('OAuth started: $args');
+              // Show the close button when oauth started
+              setState(() {
+                _showCloseButton = true;
+              });
+            }
+        );
+      },
     );
   }
 
@@ -80,7 +145,7 @@ class _WebViewStackState extends State<WebViewStack> {
         uri = Uri.parse(uri
             .toString()
             .replaceAll("app://${widget.config.appID}",
-                'https://${widget.config.myHost}')
+            'https://${widget.config.myHost}')
             .replaceFirst("?", ""));
       }
 
@@ -91,13 +156,14 @@ class _WebViewStackState extends State<WebViewStack> {
     });
 
     FirebaseMessaging.instance.getInitialMessage().then(
-          (value) => setState(
-            () {
+          (value) =>
+          setState(
+                () {
               _resolved = true;
               _initialMessage = value?.data.toString();
             },
           ),
-        );
+    );
 
     FirebaseMessaging.instance.getToken().then(setToken);
     _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
@@ -198,7 +264,7 @@ class _WebViewStackState extends State<WebViewStack> {
   }
 
   void _onLoadStart(InAppWebViewController controller, WebUri? url) {
-    (controller, uri) {
+        (controller, uri) {
       setState(() {
         loadingPercentage = 0;
       });
@@ -231,8 +297,8 @@ class _WebViewStackState extends State<WebViewStack> {
     //     SnackBar(content: Text(utf8.decode(errorResponse.data!))));
   }
 
-  void _onConsoleMessage(
-      InAppWebViewController controller, ConsoleMessage messages) {
+  void _onConsoleMessage(InAppWebViewController controller,
+      ConsoleMessage messages) {
     developer
         .log('[IN_APP_BROWSER_LOG_LEVEL]: ${messages.messageLevel.toString()}');
     developer.log('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
