@@ -45,6 +45,10 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+    <string>We need access your camera take a photo for your events or profile picture</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access your photo library to select a photo for your events or profile picture</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allowing your location will return search results in the order of nearest to you first</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
