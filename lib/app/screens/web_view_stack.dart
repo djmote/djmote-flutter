@@ -95,39 +95,18 @@ class _WebViewStackState extends State<WebViewStack> {
 
   Widget _buildWebView() {
     return InAppWebView(
-      initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
-      onWebViewCreated: (controller) {
-        _webViewController = controller;
-        onWebViewCreated(controller);
-      },
-      shouldInterceptRequest: _onShouldInterceptRequest,
-      onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
-      onLoadStart: _onLoadStart,
-      onLoadStop: _onLoadStop,
-      onProgressChanged: _onProgressChanged,
-      onReceivedHttpError: _onReceiveHttpError,
-      onConsoleMessage: _onConsoleMessage,
-      onLoadResource: (controller, resource) {
-        // Listen for postMessage events
-        controller.addJavaScriptHandler(
-          handlerName: 'permissions.request',
-          callback: (args) {
-            developer.log('Permissions requested: $args');
-            // Handle permissions.request event
-          },
-        );
-
-        controller.addJavaScriptHandler(
-            handlerName: 'oauth.started',
-            callback: (args) {
-              developer.log('OAuth started: $args');
-              // Show the close button when oauth started
-              setState(() {
-                _showCloseButton = true;
-              });
-            }
-        );
-      },
+        initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
+        onWebViewCreated: (controller) {
+          _webViewController = controller;
+          onWebViewCreated(controller);
+        },
+        shouldInterceptRequest: _onShouldInterceptRequest,
+        onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
+        onLoadStart: _onLoadStart,
+        onLoadStop: _onLoadStop,
+        onProgressChanged: _onProgressChanged,
+        onReceivedHttpError: _onReceiveHttpError,
+        onConsoleMessage: _onConsoleMessage
     );
   }
 
@@ -139,6 +118,54 @@ class _WebViewStackState extends State<WebViewStack> {
   }
 
   void onWebViewCreated(InAppWebViewController controller) {
+    // Add JavaScript handler for "useSafeArea"
+    controller.addJavaScriptHandler(
+      handlerName: 'useSafeArea',
+      callback: (args) {
+        bool useSafeArea = args.first == true;  // Ensure the first argument is a boolean
+        setState(() {
+          _useSafeArea = useSafeArea;  // Update SafeArea state
+        });
+      },
+    );
+
+    controller.addJavaScriptHandler(
+      handlerName: 'permissions.request',
+      callback: (args) {
+        developer.log('Permissions requested: $args');
+        // Handle permissions.request event
+      },
+    );
+
+    controller.addJavaScriptHandler(
+        handlerName: 'oauth.started',
+        callback: (args) {
+          developer.log('OAuth started: $args');
+          // Show the close button when oauth started
+          setState(() {
+            _showCloseButton = true;
+          });
+        }
+    );
+
+    controller.addJavaScriptHandler(
+        handlerName: 'SnackBar',
+        callback: (args) {
+          String message = args.reduce((curr, next) => curr + next);
+          developer.log('failed loading ' + message);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(message),
+            behavior: SnackBarBehavior.fixed,
+            action: SnackBarAction(
+              label: 'Dismiss',
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ));
+        }
+    );
+
     _appLinks.uriLinkStream.listen((uri) {
       developer.log('allUriLinkStream $uri');
       if (uri.toString().contains("app://${widget.config.appID}")) {
@@ -178,23 +205,6 @@ class _WebViewStackState extends State<WebViewStack> {
         controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
       }
     });
-
-    controller.addJavaScriptHandler(
-        handlerName: 'SnackBar',
-        callback: (args) {
-          String message = args.reduce((curr, next) => curr + next);
-          developer.log('failed loading ' + message);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(message),
-            behavior: SnackBarBehavior.fixed,
-            action: SnackBarAction(
-              label: 'Dismiss',
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ));
-        });
   }
 
   Future<WebResourceResponse?> _onShouldInterceptRequest(
