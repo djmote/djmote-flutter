@@ -1,3 +1,11 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
+}
+
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
@@ -12,38 +20,55 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
-}
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode') ?: '1'
+def flutterVersionName = localProperties.getProperty('flutter.versionName') ?: '1.0'
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
 
 project.ext.envConfigFiles = [
         debug: ".env",
         release: ".env",
-        "djmote": ".env.djmote",
-        "rapruler": ".env.rapruler",
-        "pickupmvp": ".env.pickupmvp",
-        "fantasyjams": ".env.fantasyjams",
-        "trackauthoritymusic": ".env.tam",
+        djmote: ".env.djmote",
+        rapruler: ".env.rapruler",
+        pickupmvp: ".env.pickupmvp",
+        fantasyjams: ".env.fantasyjams",
+        trackauthoritymusic: ".env.tam",
 ]
 
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
+
+MYENVS = [:]
+if (!project.hasProperty('env')) {
+    project.env = [:] // Initialize env if it's not already defined
+}
+
+def loadEnvFile(flavor) {
+    // Determine the env file based on the flavor
+    def envFileName = project.ext.envConfigFiles[flavor] ?: ".env" // Fallback to default .env
+    def envFile = file("${rootDir}/../${envFileName}") // Adjusting the path to point to the Flutter root
+
+    if (envFile.exists()) {
+        println "Loading environment variables from ${envFile.absolutePath}"
+        envFile.eachLine { line ->
+            if (!line.startsWith("#")) { // Skip comments
+                def (key, value) = line.split("=", 2)
+                if (key && value) {
+                    println "setting ENV VAR ${line}"
+                    MYENVS[key.trim()] = value.trim()
+                } else {
+                    println "skip invalid line ${line}"
+                }
+            } else {
+                println "skip comment ${line}"
+            }
+        }
+    } else {
+        println "${envFileName} file not found at ${envFile.absolutePath}"
+    }
+}
+
+loadEnvFile("djmote")
 
 android {
+    namespace "com.djmote.app"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
     namespace project.env.get("APP_PACKAGE_ID")
@@ -57,11 +82,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    */
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    */
 
     defaultConfig {
         multiDexEnabled true
@@ -117,17 +142,19 @@ android {
     }
 }
 
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'cupertino_icons:0.1.3'
+    implementation 'com.adeo:app_links:1.0.0'
+    implementation 'com.google.firebase:firebase-core:21.0.1'
+    implementation 'com.google.firebase:firebase-messaging:23.1.0'
+    implementation 'com.dexterous:firebase-local-notifications:2.0.0'
+    implementation 'com.pichillilorenzo.flutter_inappwebview:flutter_inappwebview:5.3.2'
+    implementation 'com.baseflow.permissionhandler:permission_handler:10.2.0'
+    implementation 'com.get_it:get_it:7.2.0'
+    implementation 'com.github.cyangyang520:FlutterConfig:1.0.2'
+}
+
 flutter {
     source '../..'
 }
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:31.5.0')
-    implementation platform('com.google.firebase:firebase-messaging-ktx:23.1.2')
-    implementation 'androidx.window:window:1.0.0'
-    implementation 'androidx.window:window-java:1.0.0'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-}
-
-

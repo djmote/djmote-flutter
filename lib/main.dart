@@ -40,7 +40,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
-  const String flavor = appFlavor ?? String.fromEnvironment(_flavorString);
+  const String flavor = String.fromEnvironment(_flavorString) != '' ?
+  String.fromEnvironment(_flavorString) : 'djmote';
   await FlutterConfig.loadEnvVariables();
   IConfig config = ConfigFactory.buildConfigFromFlavor(flavor);
 
@@ -67,7 +68,7 @@ void main() async {
     MaterialApp(
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      home: const App(),
+      home: App(config: config),
     ),
   );
 }

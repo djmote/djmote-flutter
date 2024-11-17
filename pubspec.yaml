@@ -20,7 +20,6 @@ version: 1.0.1+2
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.6"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -49,6 +48,7 @@ dependencies:
 
   # Service Locator
   get_it: ^8.0.0
+  share_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:

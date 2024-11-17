@@ -5,6 +5,9 @@
 	<key>aps-environment</key>
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
-	<array/>
+	<array>
+		<string>webcredentials:djmote.com</string>
+		<string>webcredentials:*.djmote.com</string>
+	</array>
 </dict>
 </plist>
