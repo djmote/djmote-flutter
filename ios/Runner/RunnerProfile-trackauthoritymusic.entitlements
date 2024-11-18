@@ -8,6 +8,8 @@
 	<array>
 		<string>webcredentials:djmote.com</string>
 		<string>webcredentials:*.djmote.com</string>
+		<string>applinks:djmote.com</string>
+		<string>applinks:*.djmote.com</string>
 	</array>
 </dict>
 </plist>

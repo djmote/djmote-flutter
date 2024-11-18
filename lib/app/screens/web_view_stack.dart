@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
-import 'dart:developer' as developer;
 
 import 'package:TrackAuthorityMusic/app/handlers/url_handler.dart';
 import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
@@ -50,12 +49,13 @@ class _WebViewStackState extends State<WebViewStack> {
 
   @override
   void didUpdateWidget(covariant WebViewStack oldWidget) {
-    developer.log("updating webview url ${widget.initialUrl}");
+    print("updating webview url ${widget.initialUrl}");
     super.didUpdateWidget(oldWidget);
 
     // Reload WebView with the updated URL
     if (oldWidget.initialUrl != widget.initialUrl) {
-      _webViewController!.loadUrl(
+      print("navigate from ${oldWidget.initialUrl}");
+      _webViewController.loadUrl(
         urlRequest: URLRequest(url: WebUri(widget.initialUrl)),
       );
     }
@@ -92,8 +92,7 @@ class _WebViewStackState extends State<WebViewStack> {
                     } else {
                       // If there's no history, reload the initial URL or handle appropriately
                       _webViewController!.loadUrl(
-                        urlRequest:
-                            URLRequest(url: WebUri(widget.initialUrl)),
+                        urlRequest: URLRequest(url: WebUri(widget.initialUrl)),
                       );
                     }
                   }
@@ -112,11 +111,11 @@ class _WebViewStackState extends State<WebViewStack> {
           _webViewController = controller;
           onWebViewCreated(controller);
         },
+        onProgressChanged: _onProgressChanged,
         shouldInterceptRequest: _onShouldInterceptRequest,
         onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
         onLoadStart: _onLoadStart,
         onLoadStop: _onLoadStop,
-        onProgressChanged: _onProgressChanged,
         onReceivedHttpError: _onReceiveHttpError,
         onConsoleMessage: _onConsoleMessage);
   }
@@ -124,16 +123,18 @@ class _WebViewStackState extends State<WebViewStack> {
   //todo I would suggest to use Provider to separate logic from view
 
   void setToken(String? token) {
-    developer.log('FCM Token: $token');
+    print('FCM Token: $token');
     _token = token;
   }
 
   void onWebViewCreated(InAppWebViewController controller) {
+    print('onWebViewCreated. setting js listeners');
+
     // Add JavaScript handler for "useSafeArea"
     controller.addJavaScriptHandler(
       handlerName: 'useSafeArea',
       callback: (args) {
-        developer.log('SafeArea toggled: $args');
+        print('SafeArea toggled: $args');
         bool useSafeArea =
             args.first == true; // Ensure the first argument is a boolean
         setState(() {
@@ -145,7 +146,7 @@ class _WebViewStackState extends State<WebViewStack> {
     controller.addJavaScriptHandler(
       handlerName: 'ShareEvent',
       callback: (args) {
-        developer.log('ShareEvent: $args');
+        print('ShareEvent: $args');
         if (args.isNotEmpty) {
           final data = args[0] as Map<String, dynamic>;
           final url = data['url'] ?? '';
@@ -161,7 +162,7 @@ class _WebViewStackState extends State<WebViewStack> {
     controller.addJavaScriptHandler(
       handlerName: 'permissions.request',
       callback: (args) {
-        developer.log('Permissions requested: $args');
+        print('Permissions requested: $args');
         // Handle permissions.request event
       },
     );
@@ -169,7 +170,7 @@ class _WebViewStackState extends State<WebViewStack> {
     controller.addJavaScriptHandler(
         handlerName: 'oauth.started',
         callback: (args) {
-          developer.log('OAuth started: $args');
+          print('OAuth started: $args');
           // Show the close button when oauth started
           setState(() {
             _showCloseButton = true;
@@ -180,7 +181,7 @@ class _WebViewStackState extends State<WebViewStack> {
         handlerName: 'SnackBar',
         callback: (args) {
           String message = args.reduce((curr, next) => curr + next);
-          developer.log('failed loading ' + message);
+          print('failed loading ' + message);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(message),
             behavior: SnackBarBehavior.fixed,
@@ -222,7 +223,8 @@ class _WebViewStackState extends State<WebViewStack> {
     if (!request.isForMainFrame!) return null;
 
     final host = request.url.host;
-    developer.log('navigating host $host');
+    print('navigating host $host');
+    print('navigating host $host');
     final allowedDomains = widget.config.allowedDomains;
 
     if (kDebugMode) {
@@ -284,43 +286,50 @@ class _WebViewStackState extends State<WebViewStack> {
   }
 
   void _onLoadStart(InAppWebViewController controller, WebUri? url) {
-    (controller, uri) {
-      setState(() {
-        loadingPercentage = 0;
-      });
-    };
+    print('loading started ${url?.host}');
+    setState(() {
+      loadingPercentage = 0;
+    });
   }
 
   void _onLoadStop(InAppWebViewController controller, WebUri? url) {
+    print('finished loading ${url?.host}');
     setState(() {
-      developer.log('finished loading ${url?.host}');
       loadingPercentage = 100;
     });
   }
 
   void _onProgressChanged(InAppWebViewController controller, int progress) {
-    if (progress == 100) {
-      // todo probably could be removed
-    }
     setState(() {
       loadingPercentage = progress;
     });
   }
 
-  void _onReceiveHttpError(InAppWebViewController controller,
-      WebResourceRequest request, WebResourceResponse errorResponse) {
-    var a = 2;
-    // TODO: Would need to figure this out.
-    // developer.log('Error code: ${errorResponse.statusCode}');
-    // developer.log('Description: ${utf8.decode(errorResponse.data!)}');
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text(utf8.decode(errorResponse.data!))));
+  void _onReceiveHttpError(
+    InAppWebViewController controller,
+    WebResourceRequest request,
+    WebResourceResponse errorResponse,
+  ) {
+    final statusCode = errorResponse.statusCode;
+    final url = request.url?.toString() ?? 'Unknown URL';
+
+    // Log the error details
+    print('HTTP Error: Status code $statusCode for URL $url');
+
+    if (errorResponse.data != null) {
+      try {
+        final description = utf8.decode(errorResponse.data!);
+        print('Error description: $description');
+      } catch (e) {
+        print('Error decoding response data: $e');
+      }
+    } else {
+      print('No additional data available for this error.');
+    }
   }
 
   void _onConsoleMessage(
       InAppWebViewController controller, ConsoleMessage messages) {
-    developer
-        .log('[IN_APP_BROWSER_LOG_LEVEL]: ${messages.messageLevel.toString()}');
-    developer.log('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
+    print('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
   }
 }

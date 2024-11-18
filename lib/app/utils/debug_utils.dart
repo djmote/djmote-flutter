@@ -6,7 +6,7 @@ class DebugUtils {
     if (kDebugMode) {
       DateFormat df = DateFormat('HH:mm:ss');
       String time = df.format(DateTime.now());
-      print('developerKey - $time - $value');
+      print('myapp ($time): $value');
     }
   }
 }

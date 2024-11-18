@@ -1,11 +1,10 @@
-import 'dart:developer' as developer;
-
 import 'package:TrackAuthorityMusic/app/handlers/url_handler.dart';
 import 'package:TrackAuthorityMusic/app/screens/web_view_stack.dart';
 import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
 import 'package:TrackAuthorityMusic/domain/notification_service/inotification_service.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'services/service_locator_factory.dart';
 
@@ -21,6 +20,7 @@ class App extends StatefulWidget {
 class _WebViewAppState extends State<App> {
   late AppLinks _appLinks;
   late String currentUrl; // Track the current URL
+  static const platform = MethodChannel('app_links');
 
   @override
   void initState() {
@@ -29,32 +29,44 @@ class _WebViewAppState extends State<App> {
     currentUrl = widget.config.initUrl; // Initialize with the default URL
     _appLinks = AppLinks();
 
-    _appLinks.uriLinkStream.listen((Uri uri) {
-      developer.log('allUriLinkStream $uri');
-      if (uri.toString().contains("app://${widget.config.appID}")) {
-        uri = Uri.parse(uri
-            .toString()
-            .replaceAll("app://${widget.config.appID}",
-                'https://${widget.config.myHost}')
-            .replaceFirst("?", ""));
+    // Listen for links from iOS native side
+    platform.setMethodCallHandler((call) async {
+      if (call.method == "onLinkReceived") {
+        final uri = Uri.parse(call.arguments as String);
+        _processUri(uri);
       }
+    });
 
-      var initUrl = uri.toString();
-      var handler = new UrlHandler();
-      initUrl = handler.buildInitUrl(initUrl);
-      developer.log('final deep link: $initUrl');
-      setState(() {
-        currentUrl = initUrl; // Update the URL dynamically
-      });
+    // Listen for links from the Flutter app_links package
+    _appLinks.uriLinkStream.listen((Uri uri) {
+      _processUri(uri);
     }).onError((err) {
-      developer.log('Error in URI link stream: $err');
+      print('Error in URI link stream: $err');
+    });
+  }
+
+  void _processUri(Uri uri) {
+    print('Received URI: $uri');
+    if (uri.toString().contains("app://${widget.config.appID}")) {
+      uri = Uri.parse(uri
+          .toString()
+          .replaceAll(
+              "app://${widget.config.appID}", 'https://${widget.config.myHost}')
+          .replaceFirst("?", ""));
+    }
+
+    var handler = UrlHandler();
+    var finalUrl = handler.buildInitUrl(uri.toString());
+    print('Final deep link: $finalUrl');
+
+    // Update the WebView
+    setState(() {
+      currentUrl = finalUrl;
     });
   }
 
   /*
-  void _handleDeepLink(Uri uri) {
-    final url = uri.toString();
-
+  void _handleDeepLink(String uri) {
     // Example logic: Navigate to WebViewScreen
     Navigator.push(
       context,
@@ -63,7 +75,7 @@ class _WebViewAppState extends State<App> {
       ),
     );
   }
-   */
+  */
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,6 @@ import 'package:TrackAuthorityMusic/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get_it/get_it.dart';
 
@@ -35,7 +34,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await notificationService.setupFlutterNotifications();
   notificationService.showFlutterNotification(message);
   DebugUtils.printWithTime(
-      'Handling a background message ${message.messageId}');
+      'Handling background message ID ${message.messageId}');
 }
 
 void main() async {
@@ -45,7 +44,7 @@ void main() async {
   await FlutterConfig.loadEnvVariables();
   IConfig config = ConfigFactory.buildConfigFromFlavor(flavor);
 
-  DebugUtils.printWithTime(flavor);
+  DebugUtils.printWithTime("using flavor $flavor");
 
   await Firebase.initializeApp(
     name: config.firebaseAppName,
