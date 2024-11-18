@@ -67,7 +67,7 @@ void main() async {
     MaterialApp(
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      home: App(config: config),
+      home: App(),
     ),
   );
 }

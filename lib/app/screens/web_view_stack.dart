@@ -8,6 +8,7 @@ import 'package:TrackAuthorityMusic/app/handlers/url_handler.dart';
 import 'package:TrackAuthorityMusic/domain/config/iconfig.dart';
 import 'package:TrackAuthorityMusic/domain/notification_service/inotification_service.dart';
 import 'package:TrackAuthorityMusic/main.dart';
+import 'package:app_links/app_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +19,12 @@ class WebViewStack extends StatefulWidget {
   final INotificationService notificationService;
   final IConfig config;
   final UrlHandler urlHandler;
-  final String initialUrl;
 
   const WebViewStack(
       {super.key,
       required this.notificationService,
       required this.config,
-      required this.urlHandler,
-      required this.initialUrl});
+      required this.urlHandler});
 
   @override
   State<WebViewStack> createState() => _WebViewStackState();
@@ -34,6 +33,7 @@ class WebViewStack extends StatefulWidget {
 class _WebViewStackState extends State<WebViewStack> {
   bool _showCloseButton = false; // To track the visibility of the close button
   late InAppWebViewController _webViewController;
+  final _appLinks = AppLinks();
 
   bool _useSafeArea = true; // State to track SafeArea usage
 
@@ -46,20 +46,6 @@ class _WebViewStackState extends State<WebViewStack> {
   String? _initialMessage;
 
   var loadingPercentage = 0;
-
-  @override
-  void didUpdateWidget(covariant WebViewStack oldWidget) {
-    print("updating webview url ${widget.initialUrl}");
-    super.didUpdateWidget(oldWidget);
-
-    // Reload WebView with the updated URL
-    if (oldWidget.initialUrl != widget.initialUrl) {
-      print("navigate from ${oldWidget.initialUrl}");
-      _webViewController.loadUrl(
-        urlRequest: URLRequest(url: WebUri(widget.initialUrl)),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +78,8 @@ class _WebViewStackState extends State<WebViewStack> {
                     } else {
                       // If there's no history, reload the initial URL or handle appropriately
                       _webViewController!.loadUrl(
-                        urlRequest: URLRequest(url: WebUri(widget.initialUrl)),
+                        urlRequest:
+                            URLRequest(url: WebUri(widget.config.initUrl)),
                       );
                     }
                   }
@@ -104,9 +91,16 @@ class _WebViewStackState extends State<WebViewStack> {
     );
   }
 
+  @override
+  void dispose() {
+    print('disposing webstackscreen');
+    _webViewController?.stopLoading();
+    super.dispose();
+  }
+
   Widget _buildWebView() {
     return InAppWebView(
-        initialUrlRequest: URLRequest(url: WebUri(widget.initialUrl)),
+        initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
         onWebViewCreated: (controller) {
           _webViewController = controller;
           onWebViewCreated(controller);
@@ -114,17 +108,10 @@ class _WebViewStackState extends State<WebViewStack> {
         onProgressChanged: _onProgressChanged,
         shouldInterceptRequest: _onShouldInterceptRequest,
         onReceivedServerTrustAuthRequest: _onReceivedServerTrustAuthRequest,
-        onLoadStart: _onLoadStart,
+        // onLoadStart: _onLoadStart,
         onLoadStop: _onLoadStop,
         onReceivedHttpError: _onReceiveHttpError,
         onConsoleMessage: _onConsoleMessage);
-  }
-
-  //todo I would suggest to use Provider to separate logic from view
-
-  void setToken(String? token) {
-    print('FCM Token: $token');
-    _token = token;
   }
 
   void onWebViewCreated(InAppWebViewController controller) {
@@ -194,6 +181,25 @@ class _WebViewStackState extends State<WebViewStack> {
           ));
         });
 
+    _appLinks.uriLinkStream.listen((uri) {
+      print('allUriLinkStream $uri');
+      if (uri.toString().contains("app://${widget.config.appID}")) {
+        uri = Uri.parse(uri
+            .toString()
+            .replaceAll("app://${widget.config.appID}",
+                'https://${widget.config.myHost}')
+            .replaceFirst("?", ""));
+      }
+      var initUrl = uri.toString();
+      initUrl = widget.urlHandler.buildInitUrl(initUrl);
+      controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
+    });
+
+    void setToken(String? token) {
+      print('FCM Token: $token');
+      _token = token;
+    }
+
     FirebaseMessaging.instance.getInitialMessage().then(
           (value) => setState(
             () {
@@ -207,12 +213,12 @@ class _WebViewStackState extends State<WebViewStack> {
     _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
     _tokenStream.listen(setToken);
 
-    FirebaseMessaging.onMessage
-        .listen(notificationService.showFlutterNotification);
+    FirebaseMessaging.onMessage.listen(notificationService.showFlutterNotification);
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.data.containsKey("url")) {
         var initUrl = widget.urlHandler.buildInitUrl(message.data["url"]);
+        print('Firebase message link: $initUrl');
         controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
       }
     });
@@ -223,7 +229,6 @@ class _WebViewStackState extends State<WebViewStack> {
     if (!request.isForMainFrame!) return null;
 
     final host = request.url.host;
-    print('navigating host $host');
     print('navigating host $host');
     final allowedDomains = widget.config.allowedDomains;
 
@@ -283,13 +288,6 @@ class _WebViewStackState extends State<WebViewStack> {
       URLAuthenticationChallenge challenge) async {
     return ServerTrustAuthResponse(
         action: ServerTrustAuthResponseAction.PROCEED);
-  }
-
-  void _onLoadStart(InAppWebViewController controller, WebUri? url) {
-    print('loading started ${url?.host}');
-    setState(() {
-      loadingPercentage = 0;
-    });
   }
 
   void _onLoadStop(InAppWebViewController controller, WebUri? url) {
