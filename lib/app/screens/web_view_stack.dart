@@ -20,12 +20,14 @@ class WebViewStack extends StatefulWidget {
   final INotificationService notificationService;
   final IConfig config;
   final UrlHandler urlHandler;
+  final String initialUrl;
 
   const WebViewStack(
       {super.key,
       required this.notificationService,
       required this.config,
-      required this.urlHandler});
+      required this.urlHandler,
+      required this.initialUrl});
 
   @override
   State<WebViewStack> createState() => _WebViewStackState();
@@ -53,7 +55,7 @@ class _WebViewStackState extends State<WebViewStack> {
 
   @override
   void initState() {
-    currentUrl = widget.config.initUrl;
+    currentUrl = widget.initialUrl;
     super.initState();
   }
 
