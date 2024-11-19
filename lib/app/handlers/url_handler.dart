@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
+import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 
@@ -14,8 +15,8 @@ class UrlHandler{
     initUrl += 'appOS=${Platform.operatingSystem}';
 
     final mediaQuery = MediaQueryData.fromView(ui.PlatformDispatcher.instance.views.first);
-    initUrl += '&paddingTop=${mediaQuery.padding.top}';
-    initUrl += '&paddingBottom=${mediaQuery.padding.bottom}';
+    initUrl += '&paddingTop=${mediaQuery.padding.top.floor()}';
+    initUrl += '&paddingBottom=${mediaQuery.padding.bottom.floor()}';
 
     return initUrl;
   }

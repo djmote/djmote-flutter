@@ -12,6 +12,7 @@ import 'package:app_links/app_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -34,18 +35,27 @@ class _WebViewStackState extends State<WebViewStack> {
   bool _showCloseButton = false; // To track the visibility of the close button
   late InAppWebViewController _webViewController;
   final _appLinks = AppLinks();
-
+  double topPadding = 0.0; // Dynamic top padding
+  double bottomPadding = 0.0; // Dynamic bottom padding
+  static const platform = MethodChannel('app_links');
   bool _useSafeArea = true; // State to track SafeArea usage
+  String currentUrl = 'https://djmote.com';
 
   INotificationService notificationService =
       serviceLocator.get<INotificationService>();
 
   bool? _resolved;
   String? _token;
-  late Stream<String> _tokenStream;
   String? _initialMessage;
+  late Stream<String> _tokenStream;
 
   var loadingPercentage = 0;
+
+  @override
+  void initState() {
+    currentUrl = widget.config.initUrl;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +63,20 @@ class _WebViewStackState extends State<WebViewStack> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: _useSafeArea ? MediaQuery.of(context).padding.top : 0,
+              bottom: _useSafeArea ? MediaQuery.of(context).padding.bottom : 0,
+            ),
+            child: _buildWebView(),
+          ),
           if (loadingPercentage < 100)
             LinearProgressIndicator(
               value: loadingPercentage / 100.0,
             ),
-          _useSafeArea ? SafeArea(child: _buildWebView()) : _buildWebView(),
-          // Show the close button if _showCloseButton is true
           if (_showCloseButton)
             Positioned(
-              top: 20,
+              top: MediaQuery.of(context).padding.top + 20,
               right: 20,
               child: FloatingActionButton(
                 backgroundColor: Colors.red,
@@ -70,18 +85,16 @@ class _WebViewStackState extends State<WebViewStack> {
                   setState(() {
                     _showCloseButton = false;
                   });
-                  if (_webViewController != null) {
-                    // Go back to the previous page or close the in-app browser
-                    bool canGoBack = await _webViewController!.canGoBack();
-                    if (canGoBack) {
-                      _webViewController!.goBack();
-                    } else {
-                      // If there's no history, reload the initial URL or handle appropriately
-                      _webViewController!.loadUrl(
-                        urlRequest:
-                            URLRequest(url: WebUri(widget.config.initUrl)),
-                      );
-                    }
+                  // Go back to the previous page or close the in-app browser
+                  bool canGoBack = await _webViewController.canGoBack();
+                  if (canGoBack) {
+                    _webViewController.goBack();
+                  } else {
+                    // If there's no history, reload the initial URL or handle appropriately
+                    var initUrl = widget.urlHandler.buildInitUrl(currentUrl);
+                    _webViewController.loadUrl(
+                      urlRequest: URLRequest(url: WebUri(initUrl)),
+                    );
                   }
                 },
               ),
@@ -94,13 +107,13 @@ class _WebViewStackState extends State<WebViewStack> {
   @override
   void dispose() {
     print('disposing webstackscreen');
-    _webViewController?.stopLoading();
+    _webViewController.stopLoading();
     super.dispose();
   }
 
   Widget _buildWebView() {
     return InAppWebView(
-        initialUrlRequest: URLRequest(url: WebUri(widget.config.initUrl)),
+        initialUrlRequest: URLRequest(url: WebUri(currentUrl)),
         onWebViewCreated: (controller) {
           _webViewController = controller;
           onWebViewCreated(controller);
@@ -121,7 +134,8 @@ class _WebViewStackState extends State<WebViewStack> {
     controller.addJavaScriptHandler(
       handlerName: 'useSafeArea',
       callback: (args) {
-        print('SafeArea toggled: $args');
+        print(
+            'SafeArea toggled: $args: Media query top: ${MediaQuery.of(context).padding.top}, bottom: ${MediaQuery.of(context).padding.bottom}');
         bool useSafeArea =
             args.first == true; // Ensure the first argument is a boolean
         setState(() {
@@ -181,7 +195,7 @@ class _WebViewStackState extends State<WebViewStack> {
           ));
         });
 
-    _appLinks.uriLinkStream.listen((uri) {
+    void _processUri(Uri uri) {
       print('allUriLinkStream $uri');
       if (uri.toString().contains("app://${widget.config.appID}")) {
         uri = Uri.parse(uri
@@ -191,8 +205,26 @@ class _WebViewStackState extends State<WebViewStack> {
             .replaceFirst("?", ""));
       }
       var initUrl = uri.toString();
-      initUrl = widget.urlHandler.buildInitUrl(initUrl);
-      controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
+      if (currentUrl != initUrl) {
+        currentUrl = initUrl;
+        initUrl = widget.urlHandler.buildInitUrl(initUrl);
+        controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
+      }
+    }
+
+    // Listen for links from iOS native side
+    platform.setMethodCallHandler((call) async {
+      if (call.method == "onLinkReceived") {
+        final uri = Uri.parse(call.arguments as String);
+        _processUri(uri);
+      }
+    });
+
+    // Listen for links from the Flutter app_links package
+    _appLinks.uriLinkStream.listen((Uri uri) {
+      _processUri(uri);
+    }).onError((err) {
+      print('Error in URI link stream: $err');
     });
 
     void setToken(String? token) {
@@ -213,15 +245,65 @@ class _WebViewStackState extends State<WebViewStack> {
     _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
     _tokenStream.listen(setToken);
 
-    FirebaseMessaging.onMessage.listen(notificationService.showFlutterNotification);
+    FirebaseMessaging.onMessage
+        .listen(notificationService.showFlutterNotification);
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.data.containsKey("url")) {
-        var initUrl = widget.urlHandler.buildInitUrl(message.data["url"]);
-        print('Firebase message link: $initUrl');
-        controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
+        print('Firebase message link: ${message.data.containsKey("url")}');
+        if (message.data["url"] != currentUrl) {
+          currentUrl = message.data["url"];
+          var initUrl = widget.urlHandler.buildInitUrl(message.data["url"]);
+          controller.loadUrl(urlRequest: URLRequest(url: WebUri(initUrl)));
+        }
       }
     });
+  }
+
+  void _onLoadStop(InAppWebViewController controller, WebUri? url) {
+    print('finished loading ${url?.host}');
+    setState(() {
+      loadingPercentage = 100;
+    });
+  }
+
+  void _onProgressChanged(InAppWebViewController controller, int progress) {
+    setState(() {
+      loadingPercentage = progress;
+    });
+  }
+
+  void _onReceiveHttpError(InAppWebViewController controller,
+      WebResourceRequest request, WebResourceResponse errorResponse) {
+    final statusCode = errorResponse.statusCode;
+    final url = request.url?.toString() ?? 'Unknown URL';
+
+    // Log the error details
+    print('HTTP Error: Status code $statusCode for URL $url');
+
+    if (errorResponse.data != null) {
+      try {
+        final description = utf8.decode(errorResponse.data!);
+        print('Error description: $description');
+      } catch (e) {
+        print('Error decoding response data: $e');
+      }
+    } else {
+      print('No additional data available for this error. $errorResponse');
+    }
+
+    /*
+    if (statusCode == 404) {
+      print('Custom handling for HTTP 404 at $url');
+      controller.loadUrl(
+          urlRequest: URLRequest(url: WebUri("https://djmote.com")));
+    }
+     */
+  }
+
+  void _onConsoleMessage(
+      InAppWebViewController controller, ConsoleMessage messages) {
+    print('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
   }
 
   Future<WebResourceResponse?> _onShouldInterceptRequest(
@@ -288,46 +370,5 @@ class _WebViewStackState extends State<WebViewStack> {
       URLAuthenticationChallenge challenge) async {
     return ServerTrustAuthResponse(
         action: ServerTrustAuthResponseAction.PROCEED);
-  }
-
-  void _onLoadStop(InAppWebViewController controller, WebUri? url) {
-    print('finished loading ${url?.host}');
-    setState(() {
-      loadingPercentage = 100;
-    });
-  }
-
-  void _onProgressChanged(InAppWebViewController controller, int progress) {
-    setState(() {
-      loadingPercentage = progress;
-    });
-  }
-
-  void _onReceiveHttpError(
-    InAppWebViewController controller,
-    WebResourceRequest request,
-    WebResourceResponse errorResponse,
-  ) {
-    final statusCode = errorResponse.statusCode;
-    final url = request.url?.toString() ?? 'Unknown URL';
-
-    // Log the error details
-    print('HTTP Error: Status code $statusCode for URL $url');
-
-    if (errorResponse.data != null) {
-      try {
-        final description = utf8.decode(errorResponse.data!);
-        print('Error description: $description');
-      } catch (e) {
-        print('Error decoding response data: $e');
-      }
-    } else {
-      print('No additional data available for this error.');
-    }
-  }
-
-  void _onConsoleMessage(
-      InAppWebViewController controller, ConsoleMessage messages) {
-    print('[IN_APP_BROWSER_MESSAGE]: ${messages.message}');
   }
 }

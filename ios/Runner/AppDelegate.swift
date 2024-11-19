@@ -28,6 +28,7 @@ import Firebase
                 let methodChannel = FlutterMethodChannel(name: "app_links", binaryMessenger: flutterViewController.binaryMessenger)
                 methodChannel.invokeMethod("onLinkReceived", arguments: url.absoluteString)
             }
+            return true;
         }
         return super.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
