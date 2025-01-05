@@ -78,7 +78,7 @@ class _WebViewStackState extends State<WebViewStack> {
             ),
           if (_showCloseButton)
             Positioned(
-              top: _useSafeArea ? MediaQuery.of(context).padding.top + 20 : 20,
+              top: _useSafeArea ? MediaQuery.of(context).padding.top + 90 : 90,
               right: 20,
               child: FloatingActionButton(
                 backgroundColor: Colors.red,
