@@ -67,8 +67,8 @@ class _WebViewStackState extends State<WebViewStack> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: _useSafeArea ? MediaQuery.of(context).padding.top : 0,
-              bottom: _useSafeArea ? MediaQuery.of(context).padding.bottom : 0,
+              top: _useSafeArea ? MediaQuery.of(context).padding.top : 200,
+              bottom: _useSafeArea ? MediaQuery.of(context).padding.bottom : 200,
             ),
             child: _buildWebView(),
           ),
@@ -78,7 +78,7 @@ class _WebViewStackState extends State<WebViewStack> {
             ),
           if (_showCloseButton)
             Positioned(
-              top: _useSafeArea ? MediaQuery.of(context).padding.top + 90 : 90,
+              top: _useSafeArea ? MediaQuery.of(context).padding.top + 0 : 0,
               right: 20,
               child: FloatingActionButton(
                 backgroundColor: Colors.red,
