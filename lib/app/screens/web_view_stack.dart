@@ -40,7 +40,7 @@ class _WebViewStackState extends State<WebViewStack> {
   double topPadding = 0.0; // Dynamic top padding
   double bottomPadding = 0.0; // Dynamic bottom padding
   static const platform = MethodChannel('app_links');
-  bool _useSafeArea = false; // State to track SafeArea usage
+  bool _useSafeArea = true; // State to track SafeArea usage
   String currentUrl = 'https://djmote.com';
 
   INotificationService notificationService =
@@ -67,8 +67,8 @@ class _WebViewStackState extends State<WebViewStack> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: _useSafeArea ? MediaQuery.of(context).padding.top : 200,
-              bottom: _useSafeArea ? MediaQuery.of(context).padding.bottom : 200,
+              top: _useSafeArea ? MediaQuery.of(context).padding.top : 0,
+              bottom: _useSafeArea ? MediaQuery.of(context).padding.bottom : 0,
             ),
             child: _buildWebView(),
           ),
@@ -78,7 +78,7 @@ class _WebViewStackState extends State<WebViewStack> {
             ),
           if (_showCloseButton)
             Positioned(
-              top: _useSafeArea ? MediaQuery.of(context).padding.top + 0 : 0,
+              top: MediaQuery.of(context).padding.top + 20,
               right: 20,
               child: FloatingActionButton(
                 backgroundColor: Colors.red,
@@ -136,9 +136,12 @@ class _WebViewStackState extends State<WebViewStack> {
     controller.addJavaScriptHandler(
       handlerName: 'useSafeArea',
       callback: (args) {
-        bool useSafeArea = args.first == true;
+        print(
+            'SafeArea toggled: $args: Media query top: ${MediaQuery.of(context).padding.top}, bottom: ${MediaQuery.of(context).padding.bottom}');
+        bool useSafeArea =
+            args.first == true; // Ensure the first argument is a boolean
         setState(() {
-          _useSafeArea = useSafeArea;
+          _useSafeArea = useSafeArea; // Update SafeArea state
         });
       },
     );
